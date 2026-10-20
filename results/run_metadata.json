@@ -1,0 +1,59 @@
+{
+  "version": "0.1.0",
+  "mode": "retrospective pool-based active learning on already measured observations",
+  "data_sha256": "dd507d203c83db659000ff743ecf7afa77b30e284ecc248c2eb22aa4d474bdec",
+  "data_roles": {
+    "pool": 2400,
+    "local_test": 400,
+    "distant_test": 800
+  },
+  "feature_count": 21,
+  "feature_definition": "20 residue fractions + source reference-relative substitution count",
+  "budgets": [
+    64,
+    128,
+    192,
+    256,
+    384
+  ],
+  "seeds": [
+    11,
+    29,
+    47,
+    83
+  ],
+  "strategies": [
+    "random",
+    "uncertainty_diversity"
+  ],
+  "forest": {
+    "bootstrap": true,
+    "ccp_alpha": 0.0,
+    "criterion": "squared_error",
+    "max_depth": 10,
+    "max_features": 1.0,
+    "max_leaf_nodes": null,
+    "max_samples": null,
+    "min_impurity_decrease": 0.0,
+    "min_samples_leaf": 2,
+    "min_samples_split": 2,
+    "min_weight_fraction_leaf": 0.0,
+    "monotonic_cst": null,
+    "n_estimators": 64,
+    "n_jobs": 1,
+    "oob_score": false,
+    "random_state": 2026,
+    "verbose": 0,
+    "warm_start": false
+  },
+  "model_seed_rule": "Simulation fits use seed + label_budget; all-pool reference uses 2026",
+  "uncertainty_scope": "Tree disagreement is an acquisition heuristic, not calibrated epistemic or aleatoric uncertainty",
+  "evaluation_scope": "Fixed related-sequence local and mutation-distance test subsets; no novel protein-family or prospective generalization claim",
+  "paired_difference_scope": "Paired random-seed differences are descriptive; shared pool/test outcomes preclude independent-study interpretation",
+  "versions": {
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "scikit-learn": "1.8.0",
+    "matplotlib": "3.10.8"
+  }
+}

@@ -1,0 +1,62 @@
+{
+  "schema_version": "1.0",
+  "dataset": "Sarkisyan 2016 avGFP, original phenotype with TAPE split membership",
+  "source_dataset_doi": "10.6084/m9.figshare.3102154.v1",
+  "source_study_doi": "10.1038/nature17995",
+  "original_data_license": "CC BY 4.0",
+  "license_url": "https://creativecommons.org/licenses/by/4.0/",
+  "sources": {
+    "source_fluorescence.tar.gz": {
+      "url": "https://s3.amazonaws.com/songlabdata/proteindata/data_raw_pytorch/fluorescence.tar.gz",
+      "sha256": "3c7caffd28a40f0dc8791fa311f90af4423654bd90c72fdc1e5bb191c79e175a"
+    },
+    "amino_acid_genotypes_to_brightness.tsv": {
+      "url": "https://ndownloader.figshare.com/files/4820647",
+      "sha256": "5581230b9888f9960708a4769ce1c9b4453561f0b5f0374525445b4a984d54d5"
+    }
+  },
+  "tape_member_sha256": {
+    "train": "0a57cc0d1424ae67777bf3f836b559acab7f73063f6a928ddb833eb04640a156",
+    "valid": "7aab37c3b7ff18553d16ce172b828178ecd7fd4968e9b29852192953f9b90a0f",
+    "test": "54880bbf5007a2fcdcd4c512a595183a938b8f0ef03e4a254554b09aa865c7b4"
+  },
+  "source_counts": {
+    "train": {
+      "raw_rows": 21446,
+      "full_length_mapped_rows": 20963
+    },
+    "valid": {
+      "raw_rows": 5362,
+      "full_length_mapped_rows": 5235
+    },
+    "test": {
+      "raw_rows": 27217,
+      "full_length_mapped_rows": 25517
+    }
+  },
+  "original_full_length_sequences_mapped": 51715,
+  "original_stop_containing_rows_excluded": 2310,
+  "max_original_vs_tape_label_difference": 2.3484440436760678e-07,
+  "subset": {
+    "pool": 2400,
+    "local_test": 400,
+    "distant_test": 800,
+    "sequence_length": 237,
+    "selection": "Train+valid ranked by SHA256(gfp-active-learning-v1| + sequence): first 2400 pool, next 400 local_test; test ranked separately: first 800 distant_test; no labels used",
+    "pool_source_splits": [
+      "train",
+      "valid"
+    ],
+    "local_test_source_splits": [
+      "train",
+      "valid"
+    ],
+    "distant_test_source_splits": [
+      "test"
+    ]
+  },
+  "phenotype": "Original amino-acid-level medianBrightness: median log-brightness across associated barcodes; TAPE float32 labels verified within 1e-6",
+  "dataset_sha256": "dd507d203c83db659000ff743ecf7afa77b30e284ecc248c2eb22aa4d474bdec",
+  "dataset_bytes": 1276273,
+  "verified_on": "2026-10-20"
+}

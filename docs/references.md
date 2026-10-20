@@ -1,0 +1,9 @@
+# References
+
+1. Sarkisyan KS et al. **Local fitness landscape of the green fluorescent protein.** *Nature* 533:397–401 (2016). [doi:10.1038/nature17995](https://doi.org/10.1038/nature17995). Original sequence–phenotype study.
+2. **Local fitness landscape of the green fluorescent protein.** Figshare dataset, version 1. [doi:10.6084/m9.figshare.3102154.v1](https://doi.org/10.6084/m9.figshare.3102154.v1). Original files and phenotype definitions; CC BY 4.0.
+3. Rao R et al. **Evaluating Protein Transfer Learning with TAPE.** *Advances in Neural Information Processing Systems* 32 (2019). [Proceedings](https://proceedings.neurips.cc/paper/2019/hash/37f65c068b7723cd7809ee2d31d7861c-Abstract.html), [arXiv:1906.08230](https://arxiv.org/abs/1906.08230). Sequence derivative, task definition, and source attribution.
+4. Greenman KP, Amini AP, Yang KK. **Benchmarking uncertainty quantification for protein engineering.** *PLOS Computational Biology* 21(1):e1012639 (2025). [doi:10.1371/journal.pcbi.1012639](https://doi.org/10.1371/journal.pcbi.1012639). Primary empirical evidence on calibration, active learning, and dataset-dependent outcomes.
+5. Balleza E, Kim JM, Cluzel P. **Systematic characterization of maturation time of fluorescent proteins in living cells.** *Nature Methods* 15:47–51 (2018; published online 2017). [doi:10.1038/nmeth.4509](https://doi.org/10.1038/nmeth.4509), [author publication page](https://cluzel.fas.harvard.edu/publications/systematic-characterization-maturation-time-fluorescent-proteins-living-cells). Maturation as a component of reporter interpretation.
+
+Official implementation references: [TAPE](https://github.com/songlab-cal/tape), [Protein UQ](https://github.com/microsoft/protein-uq), and [scikit-learn RandomForestRegressor](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html). See [related tools](related-tools.md) for the exact relationship to this repository.

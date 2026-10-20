@@ -1,0 +1,390 @@
+{
+  "search_date": "2026-10-20",
+  "date_window": {
+    "from": "2022-01-01",
+    "through": "2026-10-20",
+    "date_field": "publication",
+    "note": "Older foundational and official sources deliberately retained outside recent discovery window."
+  },
+  "inclusion_criteria": [
+    "Primary studies or official documentation relevant to practical validation and the fixed project's model/data",
+    "English accessible metadata; full text preferred, abstract-only access explicitly labeled"
+  ],
+  "exclusion_criteria": [
+    "Unrelated biological target/task or more elaborate capability outside this advancement",
+    "Preprints and reviews as evidence for newly implemented behavior",
+    "Displayed publication dates beyond cutoff without verified earlier publication"
+  ],
+  "review_kind": "Bounded rapid evidence review; one reviewer; not a complete systematic review",
+  "full_text_attempts": [
+    {
+      "id": "39775201",
+      "method": "PLOS publisher",
+      "result": "Full text available; uncertainty/active learning/results/conclusions inspected."
+    },
+    {
+      "id": "37498239",
+      "method": "PubMed get_articles",
+      "result": "Abstract only; no full-text method equivalence claimed."
+    }
+  ],
+  "supplementary_searches": [
+    {
+      "source": "Official GitHub Protein UQ",
+      "query": "Direct commits/main, then README.md and LICENSE at pinned revision",
+      "total_results": null,
+      "returned_count": 1,
+      "version": "5e7b2b9cd219805eaabe73b21d4d9955cf882448",
+      "access": "README and license inspected, model code not copied or executed."
+    },
+    {
+      "source": "scikit-learn official documentation",
+      "query": "Direct versioned RandomForestRegressor page",
+      "total_results": null,
+      "returned_count": 1,
+      "version": "1.8.0"
+    },
+    {
+      "source": "Prior foundational sources",
+      "query": "Retained Sarkisyan 2016 DOI 10.1038/nature17995 and TAPE 2019 proceedings",
+      "total_results": null,
+      "returned_count": 2,
+      "access": "Prior project primary-source appraisal retained for data and split meaning; not new search yields."
+    }
+  ],
+  "scope": "Auditable retrospective protein active-learning evaluation and reproducible saved results",
+  "searches": [
+    {
+      "id": "G1-page1",
+      "source": "PubMed connector",
+      "query": "(\"protein\"[Title/Abstract] AND \"active learning\"[Title/Abstract] AND (benchmark*[Title/Abstract] OR reproducib*[Title/Abstract] OR uncertainty[Title/Abstract]))",
+      "date_from": "2022/01/01",
+      "date_to": "2026/10/20",
+      "date_type": "publication",
+      "sort": "publication_date",
+      "max_results": 12,
+      "max_abstract_chars": 5500,
+      "total_results": 25,
+      "returned_count": 12,
+      "retrieved_pmids": [
+        "42556018",
+        "42726342",
+        "42411284",
+        "42010453",
+        "41896379",
+        "41929058",
+        "41790973",
+        "41634737",
+        "41614412",
+        "41345415",
+        "41303455",
+        "41278656"
+      ],
+      "next_offset": 12,
+      "pagination_limited": false,
+      "warnings": [],
+      "query_translation": "\"protein\"[Title/Abstract] AND \"active learning\"[Title/Abstract] AND (\"benchmark*\"[Title/Abstract] OR \"reproducib*\"[Title/Abstract] OR \"uncertainty\"[Title/Abstract]) AND 2022/01/01:2026/10/20[Date - Publication]",
+      "field_pages": [
+        {
+          "offset": 0,
+          "returned_count": 25,
+          "total_count": 47,
+          "next_offset": 25,
+          "has_more": true,
+          "field": "articles.41929058.authors",
+          "unit": "items"
+        }
+      ]
+    },
+    {
+      "id": "G1-page2",
+      "source": "PubMed connector",
+      "query": "(\"protein\"[Title/Abstract] AND \"active learning\"[Title/Abstract] AND (benchmark*[Title/Abstract] OR reproducib*[Title/Abstract] OR uncertainty[Title/Abstract]))",
+      "date_from": "2022/01/01",
+      "date_to": "2026/10/20",
+      "date_type": "publication",
+      "sort": "publication_date",
+      "max_results": 13,
+      "max_abstract_chars": 5500,
+      "offset": 12,
+      "total_results": 25,
+      "returned_count": 13,
+      "retrieved_pmids": [
+        "41281216",
+        "41142909",
+        "41008525",
+        "40489612",
+        "40237332",
+        "40161822",
+        "39821082",
+        "39775201",
+        "42657312",
+        "38287889",
+        "37744464",
+        "37498239",
+        "35119861"
+      ],
+      "next_offset": null,
+      "pagination_limited": false,
+      "warnings": [],
+      "query_translation": "\"protein\"[Title/Abstract] AND \"active learning\"[Title/Abstract] AND (\"benchmark*\"[Title/Abstract] OR \"reproducib*\"[Title/Abstract] OR \"uncertainty\"[Title/Abstract]) AND 2022/01/01:2026/10/20[Date - Publication]",
+      "field_pages": []
+    },
+    {
+      "id": "G2",
+      "source": "PubMed connector",
+      "query": "\"Benchmarking uncertainty quantification for protein engineering\"[Title]",
+      "date_from": "2022/01/01",
+      "date_to": "2026/10/20",
+      "date_type": "publication",
+      "sort": "publication_date",
+      "max_results": 5,
+      "max_abstract_chars": 6000,
+      "total_results": 0,
+      "returned_count": 0,
+      "retrieved_pmids": [],
+      "next_offset": null,
+      "pagination_limited": false,
+      "warnings": [
+        "\"Benchmarking uncertainty quantification for protein engineering\"[Title]",
+        "No items found."
+      ],
+      "query_translation": "\"Benchmarking uncertainty quantification for protein engineering\"[Title] AND 2022/01/01:2026/10/20[pdat]",
+      "field_pages": []
+    }
+  ],
+  "screening": [
+    {
+      "pmid": "42556018",
+      "title": "Artificial intelligence for anticancer drug discovery from natural products of macroalgae and sponges: A systematic review.",
+      "displayed_publication_date": "2026 Dec",
+      "doi": "10.1016/j.compbiolchem.2026.109280",
+      "decision": "exclude",
+      "reason": "Review rather than primary method study; not used for this bounded implementation.",
+      "screened_material": "PubMed title and abstract"
+    },
+    {
+      "pmid": "42726342",
+      "title": "Docking-score landscapes shape active-learning performance across Vina, Glide, and SILCS.",
+      "displayed_publication_date": "2026 Sep 11",
+      "doi": "10.1007/s10822-026-00927-x",
+      "decision": "exclude",
+      "reason": "Different target/task or mechanistic application; not needed for concentration sensitivity or saved-run audit.",
+      "screened_material": "PubMed title and abstract"
+    },
+    {
+      "pmid": "42411284",
+      "title": "Bridging between Structure-Based and Data-Driven Affinity Prediction.",
+      "displayed_publication_date": "2026 Jul 27",
+      "doi": "10.1021/acs.jcim.6c00697",
+      "decision": "exclude",
+      "reason": "Different target/task or mechanistic application; not needed for concentration sensitivity or saved-run audit.",
+      "screened_material": "PubMed title and abstract"
+    },
+    {
+      "pmid": "42010453",
+      "title": "ChemScreener: an active learning enabled hit discovery workflow with WDR5 inhibitor case study.",
+      "displayed_publication_date": "2026 Apr 20",
+      "doi": "10.1186/s13321-026-01204-7",
+      "decision": "exclude",
+      "reason": "Different target/task or mechanistic application; not needed for concentration sensitivity or saved-run audit.",
+      "screened_material": "PubMed title and abstract"
+    },
+    {
+      "pmid": "41896379",
+      "title": "Free energy calculations in molecular modeling: from classical methods to machine learning.",
+      "displayed_publication_date": "2026 Mar 28",
+      "doi": "10.1007/s00894-026-06678-8",
+      "decision": "exclude",
+      "reason": "Review rather than primary method study; not used for this bounded implementation.",
+      "screened_material": "PubMed title and abstract"
+    },
+    {
+      "pmid": "41929058",
+      "title": "AI-Enhanced Adaptive Virtual Screening Platform Enabling Exploration of 69 Billion Molecules Discovers Structurally Validated FSP1 Inhibitors.",
+      "displayed_publication_date": "2026 Mar 23",
+      "doi": "10.1101/2023.04.25.537981",
+      "decision": "exclude",
+      "reason": "Preprint; outside peer-reviewed evidence inclusion.",
+      "screened_material": "PubMed title and abstract"
+    },
+    {
+      "pmid": "41790973",
+      "title": "Trustworthy Compound-Protein Interaction Prediction with Interpretable and Conformalized Cross-Attention Transformers.",
+      "displayed_publication_date": "2026 Mar 23",
+      "doi": "10.1021/acs.jcim.5c02709",
+      "decision": "exclude",
+      "reason": "Different target/task or mechanistic application; not needed for concentration sensitivity or saved-run audit.",
+      "screened_material": "PubMed title and abstract"
+    },
+    {
+      "pmid": "41634737",
+      "title": "Data-efficient learning for accurate identification of MAPK1 inhibitors using an active meta-deep learning framework.",
+      "displayed_publication_date": "2026 Feb 03",
+      "doi": "10.1186/s13321-026-01159-9",
+      "decision": "exclude",
+      "reason": "Different target/task or mechanistic application; not needed for concentration sensitivity or saved-run audit.",
+      "screened_material": "PubMed title and abstract"
+    },
+    {
+      "pmid": "41614412",
+      "title": "Deep Batch Active Learning for Protein Structure Modeling.",
+      "displayed_publication_date": "2026 Jan",
+      "doi": "10.1177/15578666251405823",
+      "decision": "exclude",
+      "reason": "Different target/task or mechanistic application; not needed for concentration sensitivity or saved-run audit.",
+      "screened_material": "PubMed title and abstract"
+    },
+    {
+      "pmid": "41345415",
+      "title": "Uncertainty quantification enables reliable deep learning for protein-ligand binding affinity prediction.",
+      "displayed_publication_date": "2025 Dec 04",
+      "doi": "10.1038/s41598-025-27167-7",
+      "decision": "exclude",
+      "reason": "Different target/task or mechanistic application; not needed for concentration sensitivity or saved-run audit.",
+      "screened_material": "PubMed title and abstract"
+    },
+    {
+      "pmid": "41303455",
+      "title": "AT-TSVM: Improving Transmembrane Protein Inter-Helical Residue Contact Prediction Using Active Transfer Transductive Support Vector Machines.",
+      "displayed_publication_date": "2025 Nov 12",
+      "doi": "10.3390/ijms262210972",
+      "decision": "exclude",
+      "reason": "Different target/task or mechanistic application; not needed for concentration sensitivity or saved-run audit.",
+      "screened_material": "PubMed title and abstract"
+    },
+    {
+      "pmid": "41278656",
+      "title": "Evolutionary discovery and characterization of fungal transcriptional activators using active learning.",
+      "displayed_publication_date": "2025 Oct 29",
+      "doi": "10.1101/2025.09.12.675635",
+      "decision": "exclude",
+      "reason": "Preprint; outside peer-reviewed evidence inclusion.",
+      "screened_material": "PubMed title and abstract"
+    },
+    {
+      "pmid": "41281216",
+      "title": "Low-N Protein Activity Optimization with FolDE.",
+      "displayed_publication_date": "2025 Oct 28",
+      "doi": null,
+      "decision": "exclude",
+      "reason": "Preprint; outside peer-reviewed evidence inclusion.",
+      "screened_material": "PubMed title and abstract"
+    },
+    {
+      "pmid": "41142909",
+      "title": "Hierarchical affinity landscape navigation through learning a shared pocket-ligand space.",
+      "displayed_publication_date": "2025 Oct 10",
+      "doi": "10.1016/j.patter.2025.101371",
+      "decision": "exclude",
+      "reason": "Different target/task or mechanistic application; not needed for concentration sensitivity or saved-run audit.",
+      "screened_material": "PubMed title and abstract"
+    },
+    {
+      "pmid": "41008525",
+      "title": "Implicit Solvent Models and Their Applications in Biophysics.",
+      "displayed_publication_date": "2025 Aug 23",
+      "doi": "10.3390/biom15091218",
+      "decision": "exclude",
+      "reason": "Review rather than primary method study; not used for this bounded implementation.",
+      "screened_material": "PubMed title and abstract"
+    },
+    {
+      "pmid": "40489612",
+      "title": "Predicting high-fitness viral protein variants with Bayesian active learning and biophysics.",
+      "displayed_publication_date": "2025 Jun 17",
+      "doi": "10.1073/pnas.2503742122",
+      "decision": "exclude",
+      "reason": "Different target/task or mechanistic application; not needed for concentration sensitivity or saved-run audit.",
+      "screened_material": "PubMed title and abstract"
+    },
+    {
+      "pmid": "40237332",
+      "title": "Improving the Hit Rates of Virtual Screening by Active Learning from Bioactivity Feedback.",
+      "displayed_publication_date": "2025 May 13",
+      "doi": "10.1021/acs.jctc.4c01618",
+      "decision": "exclude",
+      "reason": "Different target/task or mechanistic application; not needed for concentration sensitivity or saved-run audit.",
+      "screened_material": "PubMed title and abstract"
+    },
+    {
+      "pmid": "40161822",
+      "title": "Few-Shot Viral Variant Detection via Bayesian Active Learning and Biophysics.",
+      "displayed_publication_date": "2025 Mar 13",
+      "doi": "10.1101/2025.03.12.642881",
+      "decision": "exclude",
+      "reason": "Preprint; outside peer-reviewed evidence inclusion.",
+      "screened_material": "PubMed title and abstract"
+    },
+    {
+      "pmid": "39821082",
+      "title": "Active learning-assisted directed evolution.",
+      "displayed_publication_date": "2025 Jan 16",
+      "doi": "10.1038/s41467-025-55987-8",
+      "decision": "exclude",
+      "reason": "Different target/task or mechanistic application; not needed for concentration sensitivity or saved-run audit.",
+      "screened_material": "PubMed title and abstract"
+    },
+    {
+      "pmid": "39775201",
+      "title": "Benchmarking uncertainty quantification for protein engineering.",
+      "displayed_publication_date": "2025 Jan",
+      "doi": "10.1371/journal.pcbi.1012639",
+      "decision": "include",
+      "reason": "Direct primary benchmark of uncertainty and retrospective acquisition; full publisher results inspected.",
+      "screened_material": "PubMed title and abstract"
+    },
+    {
+      "pmid": "42657312",
+      "title": "Physics-Guided Active Learning for New Ligand Discovery.",
+      "displayed_publication_date": "2025",
+      "doi": "10.1145/3768322.3769025",
+      "decision": "exclude",
+      "reason": "Different target/task or mechanistic application; not needed for concentration sensitivity or saved-run audit.",
+      "screened_material": "PubMed title and abstract"
+    },
+    {
+      "pmid": "38287889",
+      "title": "ChemSpaceAL: An Efficient Active Learning Methodology Applied to Protein-Specific Molecular Generation.",
+      "displayed_publication_date": "2024 Feb 12",
+      "doi": "10.1021/acs.jcim.3c01456",
+      "decision": "exclude",
+      "reason": "Different target/task or mechanistic application; not needed for concentration sensitivity or saved-run audit.",
+      "screened_material": "PubMed title and abstract"
+    },
+    {
+      "pmid": "37744464",
+      "title": "ChemSpaceAL: An Efficient Active Learning Methodology Applied to Protein-Specific Molecular Generation.",
+      "displayed_publication_date": "2023 Dec 04",
+      "doi": null,
+      "decision": "exclude",
+      "reason": "Preprint; outside peer-reviewed evidence inclusion.",
+      "screened_material": "PubMed title and abstract"
+    },
+    {
+      "pmid": "37498239",
+      "title": "Linear-Scaling Kernels for Protein Sequences and Small Molecules Outperform Deep Learning While Providing Uncertainty Quantitation and Improved Interpretability.",
+      "displayed_publication_date": "2023 Aug 14",
+      "doi": "10.1021/acs.jcim.3c00601",
+      "decision": "include",
+      "reason": "Primary alternative regression/uncertainty method; abstract-only comparison, not implemented.",
+      "screened_material": "PubMed title and abstract"
+    },
+    {
+      "pmid": "35119861",
+      "title": "TorsionNet: A Deep Neural Network to Rapidly Predict Small-Molecule Torsional Energy Profiles with the Accuracy of Quantum Mechanics.",
+      "displayed_publication_date": "2022 Feb 28",
+      "doi": "10.1021/acs.jcim.1c01346",
+      "decision": "exclude",
+      "reason": "Different target/task or mechanistic application; not needed for concentration sensitivity or saved-run audit.",
+      "screened_material": "PubMed title and abstract"
+    }
+  ],
+  "counts": {
+    "recent_search_return_events": 25,
+    "unique_recent_pmids_screened": 25,
+    "recent_pmids_included": 2,
+    "official_resources_appraised": 2,
+    "foundational_sources_retained": 2
+  }
+}

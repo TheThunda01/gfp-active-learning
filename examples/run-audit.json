@@ -1,0 +1,33 @@
+{
+  "checks": [
+    "source hashes and roles",
+    "fixed model configuration",
+    "pool-only unique queries and source labels",
+    "seeded paired initial sets and batch sizes",
+    "complete metric keys",
+    "recomputed means and sample SDs",
+    "recomputed paired differences",
+    "reference counts",
+    "recomputed sequence distances"
+  ],
+  "input_sha256": "dd507d203c83db659000ff743ecf7afa77b30e284ecc248c2eb22aa4d474bdec",
+  "limits": [
+    "Does not refit models or independently recompute prediction errors.",
+    "Consistent saved records do not prove that code or humans never saw hidden labels."
+  ],
+  "metric_rows": 80,
+  "paired_rows": 8,
+  "query_rows": 3072,
+  "result_sha256": {
+    "all_pool_reference.csv": "52dae501f0eaede78c676f560e25321441adb54a550697edce7ae503a04188c5",
+    "distance_audit.csv": "8893e4541325524797b38014d42dfaff9df41325bc4a055a100cd414d98193c3",
+    "learning_curves.csv": "c392303a8b2c65ee902c9e2115e7f743428d080043268740660c11b07c180f9e",
+    "learning_summary.csv": "c59ed8f7074849d288e43603bc4639d005978ea10e24c623423f323402d2daef",
+    "paired_final_differences.csv": "965234e8fe774f1879e1762e6262f5bba6a8597cc8a106f8c9e896f2145578b1",
+    "query_history.csv": "536af17c738dc6d31c4b7d21319f86ec44fae6dcfbabfceccdf24108703984df",
+    "run_metadata.json": "2dd2ef3a4aa7d3ae92e1d7ac37191050bead8ab6b8335971bcfa56a391471fbd"
+  },
+  "schema_version": "1.0",
+  "status": "passed",
+  "summary_rows": 20
+}

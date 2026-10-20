@@ -47,6 +47,13 @@ Audit the saved run (failure returns a nonzero exit status):
 python -m gfp_active_learning.audit --results-dir results --out run-audit.json
 ```
 
+Export final-budget predictions and check their metrics independently:
+
+```bash
+python -m gfp_active_learning.predictions export
+python -m gfp_active_learning.predictions verify
+```
+
 ## Example results
 
 At 384 revealed labels, lower root mean squared error (RMSE) is better:
@@ -63,6 +70,8 @@ Units are the source's log-brightness scale. SD describes variation across four 
 The dashed reference uses every pool label with the same model family. It is contextual, not a guaranteed upper bound. The evaluation sequences remain related to the pool: the median nearest-pool distance is two residues locally and four in the more mutated set. These are not tests on unseen protein families.
 
 The [example audit](examples/run-audit.json) verifies 3,072 acquisitions, 80 metric rows, 20 aggregate rows and eight paired differences. Passing this audit means that the saved records are consistent with the fixed contract; it does not establish biological validity or prove that humans were blinded.
+
+The [final-prediction check](examples/final-predictions/verification.json) joins 9,600 exported predictions to source labels and independently reproduces all 16 final-budget metric rows. Only the final budget is exported; earlier trajectories are unchanged.
 
 ## Practical use and limitations
 

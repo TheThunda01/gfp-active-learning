@@ -17,3 +17,5 @@ jobs:
       - run: python -m gfp_active_learning --output-dir reproduced-results
       - run: python scripts/check_reproduction.py results reproduced-results
       - run: python -m gfp_active_learning.audit --results-dir reproduced-results --out reproduced-results/audit.json
+      - run: python -m gfp_active_learning.predictions export --results-dir reproduced-results --directory prediction-check
+      - run: python -m gfp_active_learning.predictions verify --results-dir reproduced-results --directory prediction-check

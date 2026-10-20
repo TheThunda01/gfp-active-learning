@@ -14,6 +14,8 @@ The input directory must contain the checksum-verified dataset and manifest. The
 
 The command checks all query identities and labels against pool records, duplicate acquisitions, batch sizes, seeded initial sets, evaluation counts, complete metric keys, recomputed means and sample SDs, paired differences, reference counts and sequence distances. It returns a JSON report with counts, checks and SHA-256 hashes of the reviewed result files. Exit status 2 means a check failed. An output path that would replace an input is refused. With no `--out`, the JSON is printed only.
 
+The final-prediction commands provide a stronger numerical check: `python -m gfp_active_learning.predictions export --directory PATH` writes a compressed CSV and manifest, refitting only the eight already-defined final models; `verify --directory PATH` independently reconstructs the 16 final metric rows from source outcomes. Both return 0 on agreement, 1 on numerical disagreement, and 2 on input/format failures. Verification replaces its two report files in that directory.
+
 ## Worked use case
 
 Reproduce the fixed experiment into a new directory, compare it to the baseline, then audit its internal consistency:
@@ -22,11 +24,13 @@ Reproduce the fixed experiment into a new directory, compare it to the baseline,
 python -m gfp_active_learning --output-dir reproduced-results
 python scripts/check_reproduction.py results reproduced-results
 python -m gfp_active_learning.audit --results-dir reproduced-results --out reproduced-results/audit.json
+python -m gfp_active_learning.predictions export --results-dir reproduced-results --directory final-predictions
+python -m gfp_active_learning.predictions verify --results-dir reproduced-results --directory final-predictions
 ```
 
 The included [example audit](../examples/run-audit.json) passes with 3,072 queried rows, 80 metric rows, 20 aggregate rows and eight paired comparisons. Each policy acquires 384 unique pool observations for each seed. The policies share the exact seeded initial set. This supports traceability of the run, not a conclusion that either policy will work better in a laboratory.
 
-The comparison script and audit answer different questions. Comparison checks agreement with recorded numerical outputs, allowing small floating-point differences. The audit recalculates structural and arithmetic invariants from the supplied records and verified source. Neither independently regenerates individual model predictions; the full benchmark reproduction remains necessary for that check.
+The comparison script and audit answer different questions. Comparison checks agreement with recorded numerical outputs, allowing small floating-point differences. The audit recalculates structural and arithmetic invariants from the supplied records and verified source. The new final-prediction export now supplies per-observation evidence for independently reconstructing final-budget metrics. Full benchmark reproduction remains necessary for checking earlier budgets and acquisition.
 
 ## Checks before relying on a result
 
@@ -39,11 +43,11 @@ These are operator responsibilities. The software cannot establish that a person
 
 ## Known limits
 
-A consistent artifact set can still come from a poor model. Aggregate metrics can be internally consistent while predictions are wrong; the audit does not recalculate them from per-observation predictions because those predictions are not stored. It checks the current fixed experiment, not arbitrary externally configured runs. The related-sequence split, four shared-data seeds, coarse descriptors and uncalibrated tree disagreement remain unchanged.
+A consistent artifact set can still come from a poor model. Aggregate metrics can be internally consistent while predictions are wrong. The saved-run audit itself does not reconstruct predictions; use the separate final-prediction verifier for the final budget. Earlier-budget predictions are not exported. It checks the current fixed experiment, not arbitrary externally configured runs. The related-sequence split, four shared-data seeds, coarse descriptors and uncalibrated tree disagreement remain unchanged.
 
 ## Next improvements
 
-1. **Per-observation predictions:** export evaluation predictions keyed by seed, policy, budget and record ID; accept when metrics can be independently recomputed from those files and source labels.
+1. **Extended verification coverage:** final-budget predictions and independent metrics are now implemented. Add selected earlier checkpoints only if justified; accept when all requested checkpoints have complete identity checks without silently changing the benchmark.
 2. **Protocol versioning:** define a machine-readable configuration rather than hard-coded defaults; accept when incompatible configurations fail clearly and each report records a schema/version.
 3. **Additional fixed subsets:** predeclare several label-blind subset seeds; accept when results include all subsets and the original baseline remains separately reproducible.
 4. **Calibration evaluation:** assess a clearly defined uncertainty estimator only after separating development from evaluation; accept when calibration metrics and acquisition outcomes are reported together, including failures.

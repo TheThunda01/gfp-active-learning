@@ -1,0 +1,107 @@
+{
+  "search_date": "2026-10-20",
+  "round": "02",
+  "scope": "Same-day focused update: source-linked final-budget predictions and independent metric reconstruction.",
+  "inclusion_criteria": [
+    "Primary studies directly relevant to numerical verification or evaluation reliability; official documentation for implemented mathematics and software",
+    "Recent discovery window 2022-01-01 through 2026-10-20; earlier retained references remain separately attributed"
+  ],
+  "exclusion_criteria": [
+    "Unrelated laboratory workflows or measurement domains",
+    "No extension to new biological models or claimed prospective validation"
+  ],
+  "searches": [
+    {
+      "source": "PubMed connector",
+      "query": "(\"reproducibility\"[Title/Abstract] OR \"data leakage\"[Title/Abstract]) AND \"protein\" [Title/Abstract] AND benchmark*[Title/Abstract]",
+      "date_from": "2022/01/01",
+      "date_to": "2026/10/20",
+      "date_type": "publication",
+      "sort": "relevance",
+      "max_results": 6,
+      "max_abstract_chars": 3500,
+      "total_results": 130,
+      "returned_count": 6,
+      "retrieved_ids": [
+        "39657630",
+        "35467356",
+        "35803948",
+        "41779902",
+        "37674236",
+        "42822555"
+      ],
+      "next_offset": 6,
+      "pagination_limited": false,
+      "warnings": [],
+      "query_translation": "(\"reproducibility\"[Title/Abstract] OR \"data leakage\"[Title/Abstract]) AND \"protein\"[Title/Abstract] AND \"benchmark*\"[Title/Abstract] AND 2022/01/01:2026/10/20[Date - Publication]",
+      "field_pages": [],
+      "limits": "Only first 6 relevance-ranked records of 130 screened; no next-page retrieval."
+    }
+  ],
+  "screening": [
+    {
+      "pmid": "39657630",
+      "title": "Benchmarking recent computational tools for DNA-binding protein identification.",
+      "decision": "included",
+      "reason": "Primary protein-prediction evaluation study; abstract warns that dataset leakage can inflate performance.",
+      "access": "PubMed title and complete abstract; no full-text appraisal"
+    },
+    {
+      "pmid": "35467356",
+      "title": "Benchmarking Cleavable Biotin Tags for Peptide-Centric Chemoproteomics.",
+      "decision": "not_selected",
+      "reason": "Different experimental measurement/workflow domain; not needed for saved prediction verification.",
+      "access": "PubMed title and complete abstract; no full-text appraisal"
+    },
+    {
+      "pmid": "35803948",
+      "title": "Mimicked synthetic ribosomal protein complex for benchmarking crosslinking mass spectrometry workflows.",
+      "decision": "not_selected",
+      "reason": "Different experimental measurement/workflow domain; not needed for saved prediction verification.",
+      "access": "PubMed title and complete abstract; no full-text appraisal"
+    },
+    {
+      "pmid": "41779902",
+      "title": "Fine-Tuning of Label-Free Single-Cell Proteomics Workflows.",
+      "decision": "not_selected",
+      "reason": "Different experimental measurement/workflow domain; not needed for saved prediction verification.",
+      "access": "PubMed title and complete abstract; no full-text appraisal"
+    },
+    {
+      "pmid": "37674236",
+      "title": "Quartet protein reference materials and datasets for multi-platform assessment of label-free proteomics.",
+      "decision": "not_selected",
+      "reason": "Different experimental measurement/workflow domain; not needed for saved prediction verification.",
+      "access": "PubMed title and complete abstract; no full-text appraisal"
+    },
+    {
+      "pmid": "42822555",
+      "title": "A benchmark fed-batch bioprocess for production of cNISTmAb using NISTCHO.",
+      "decision": "not_selected",
+      "reason": "Different experimental measurement/workflow domain; not needed for saved prediction verification.",
+      "access": "PubMed title and complete abstract; no full-text appraisal"
+    }
+  ],
+  "supplementary_sources": [
+    {
+      "source": "Official scikit-learn regression metrics",
+      "url": "https://scikit-learn.org/1.8/modules/model_evaluation.html#regression-metrics",
+      "version": "1.8.0",
+      "access": "Versioned reference inspected; no code copied",
+      "total_results": null
+    },
+    {
+      "source": "Prior-round Greenman study",
+      "pmid": "39775201",
+      "url": "https://pubmed.ncbi.nlm.nih.gov/39775201/",
+      "access": "Retained earlier full-publisher appraisal; not newly retrieved in round 02",
+      "total_results": null
+    }
+  ],
+  "counts": {
+    "returned_records": 6,
+    "unique_screened": 6,
+    "new_primary_sources_included": 1
+  },
+  "review_limitations": "Single-reviewer bounded update on the same date as round 01; this is a new implementation question, not elapsed-time literature surveillance."
+}

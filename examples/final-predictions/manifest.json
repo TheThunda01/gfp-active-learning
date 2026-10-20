@@ -1,0 +1,14 @@
+{
+  "data_sha256": "dd507d203c83db659000ff743ecf7afa77b30e284ecc248c2eb22aa4d474bdec",
+  "label_budget": 384,
+  "model_seed_rule": "seed + final label budget",
+  "prediction_sha256": "0fba99b4ba6aef097eb4a8dfb9dc34b62859db8500170a815722e444e6059c96",
+  "rows": 9600,
+  "schema": "gfp-final-predictions/1",
+  "scope": "Stored evaluation predictions only; source labels are joined during verification. No new acquisition or biological experiment.",
+  "source_result_sha256": {
+    "learning_curves.csv": "c392303a8b2c65ee902c9e2115e7f743428d080043268740660c11b07c180f9e",
+    "query_history.csv": "536af17c738dc6d31c4b7d21319f86ec44fae6dcfbabfceccdf24108703984df",
+    "run_metadata.json": "2dd2ef3a4aa7d3ae92e1d7ac37191050bead8ab6b8335971bcfa56a391471fbd"
+  }
+}

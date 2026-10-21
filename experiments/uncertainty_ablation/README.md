@@ -34,7 +34,7 @@ The contrast in the byte-preserved [original plan](PLAN.md#outcomes-and-sign-con
 
 ```math
 \begin{aligned}
-B_{r,s} &= \operatorname{RMSE}_{\mathrm{random},r,s} - \operatorname{RMSE}_{\mathrm{combined},r,s}, \\
+B_{r,s} &= \mathrm{RMSE}_{\mathrm{random},r,s} - \mathrm{RMSE}_{\mathrm{combined},r,s}, \\
 \Delta_s &= B_{\mathrm{distant},s} - B_{\mathrm{local},s}.
 \end{aligned}
 ```

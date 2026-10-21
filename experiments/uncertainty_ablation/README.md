@@ -30,6 +30,17 @@ Lower RMSE is better. Values are mean ± sample SD across four acquisition seeds
 
 Combined improved on random by 0.0146 RMSE locally, but was worse by 0.0148 distantly. The planned distant-minus-local benefit contrast was **−0.0293** on average. Its sign split two-positive/two-negative across seeds. That is a useful disagreement with the original prediction, not a significance result.
 
+The contrast in the byte-preserved [original plan](PLAN.md#outcomes-and-sign-conventions) can be read in rendered notation as
+
+```math
+\begin{aligned}
+B_{r,s} &= \operatorname{RMSE}_{\mathrm{random},r,s} - \operatorname{RMSE}_{\mathrm{combined},r,s}, \\
+\Delta_s &= B_{\mathrm{distant},s} - B_{\mathrm{local},s}.
+\end{aligned}
+```
+
+Here, $`r`$ is the evaluation role (local or distant), $`s`$ identifies the acquisition seed, and $`B_{r,s}`$ is the combined policy's improvement over random selection. A positive $`\Delta_s`$ means a larger improvement on the distant set. This is the same sign convention as the original plan; its historical bytes and recorded hash remain unchanged.
+
 Tree disagreement (the spread of individual tree predictions) had substantially weaker Spearman rank association with absolute error distantly than locally. For the combined policy, the mean association was **0.5496 locally** and **0.0688 distantly**. Each association was computed within one policy, seed, budget and evaluation role before averaging. This is not calibration or a probability of being wrong.
 
 One plausible follow-up is to inspect whether the uncertainty shortlist excludes candidates that the full-pool diversity rule finds useful. The present result does not prove that mechanism. The model also discards residue position and cannot extrapolate the mutation-count feature beyond the pool range. The scope stays one historical GFP subset, with related sequences and already observed labels.

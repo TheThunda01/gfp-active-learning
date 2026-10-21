@@ -1,5 +1,7 @@
 # References and what they support
 
+Targeted checks from 21 October 2026 are recorded in the [maintenance review](review-2026-10-21.md). Earlier access dates and search records remain unchanged.
+
 The bibliography uses publication issue years; online dates are added when relevant. Long author lists use first author followed by “et al.” The [reference audit](reference-audit.json) records source-by-source access and limitations; the [literature review](literature-review.md) preserves the bounded discovery history.
 
 ## Research articles

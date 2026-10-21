@@ -50,5 +50,3 @@ The [reference audit](reference-audit.json) records the separate editorial verif
 ## Limits of this review
 
 This is a bounded rapid review, not a complete systematic review: one database, one reviewer, limited query vocabulary and no independent duplicate screening. All 25 returned records were screened in the first search; only the first six of 130 were screened in round 02. Neither search establishes complete coverage of relevant literature. One retained alternative was abstract-only. Publication-date filters can reflect multiple dates, as the issue-date anomaly illustrates. No abstracts or paper text are redistributed, and no model-comparison claim is inferred from documentation alone.
-
-Only six of 130 relevance-ranked records were screened in this targeted update, by one reviewer. The included new paper was abstract-only, and no general performance claims are drawn from it. The export improves numerical traceability; it does not solve biological domain shift, experimental dependence or public-benchmark overfitting.

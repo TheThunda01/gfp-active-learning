@@ -2,7 +2,7 @@
 
 ## Where this fits
 
-This is a small retrospective benchmark for checking how data acquisition affects prediction on already measured GFP records. The saved-run audit is useful when reviewing a local run, receiving result files from someone else or checking that a figure was built from a coherent experiment record. It checks the published contract without fitting another model.
+This is a small retrospective benchmark (a comparison using existing observations) for checking how data acquisition—choosing which labels to reveal—affects prediction on already measured green fluorescent protein (GFP) records. The saved-run audit is useful when reviewing a local run, receiving result files from someone else or checking that a figure was built from a coherent experiment record. It checks the published contract without fitting another model.
 
 ## Input and output contract
 
@@ -12,7 +12,7 @@ python -m gfp_active_learning.audit --data-dir data --results-dir results --out 
 
 The input directory must contain the checksum-verified dataset and manifest. The result directory must contain `run_metadata.json` and the six CSV files from the standard benchmark. The audit expects the current four seeds, two policies, five budgets and forest configuration. A changed protocol needs deliberate changes to the contract; it should not pass as the original experiment.
 
-The command checks all query identities and labels against pool records, duplicate acquisitions, batch sizes, seeded initial sets, evaluation counts, complete metric keys, recomputed means and sample SDs, paired differences, reference counts and sequence distances. It returns a JSON report with counts, checks and SHA-256 hashes of the reviewed result files. Exit status 2 means a check failed. An output path that would replace an input is refused. With no `--out`, the JSON is printed only.
+The command checks all query identities and labels against pool records, duplicate acquisitions, batch sizes, seeded initial sets, evaluation counts, complete metric keys, recomputed means and sample standard deviations (SDs), paired differences, reference counts and sequence distances. It returns a JSON report with counts, checks and SHA-256 hashes of the reviewed result files. Exit status 2 means a check failed. An output path that would replace an input is refused. With no `--out`, the JSON is printed only.
 
 The final-prediction commands provide a stronger numerical check: `python -m gfp_active_learning.predictions export --directory PATH` writes a compressed CSV and manifest, refitting only the eight already-defined final models; `verify --directory PATH` independently reconstructs the 16 final metric rows from source outcomes. Both return 0 on agreement, 1 on numerical disagreement, and 2 on input/format failures. Verification replaces its two report files in that directory.
 
@@ -40,6 +40,8 @@ The comparison script and audit answer different questions. Comparison checks ag
 - Retain the audit report with the reviewed files; changing files afterward requires another audit.
 
 These are operator responsibilities. The software cannot establish that a person avoided viewing public outcomes, that an unknown implementation hid labels, or that a biological measurement is valid. Existing counterfactual tests check that changing hidden labels does not change acquisition in this implementation.
+
+The [glossary](glossary.md) defines file and statistical terms; the [assumption register](assumptions.md) explains the fixed protocol and what its checks cannot establish.
 
 ## Known limits
 

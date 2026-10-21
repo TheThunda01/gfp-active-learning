@@ -2,7 +2,7 @@
 
 ## Fixed data roles
 
-The [preparation script](../scripts/prepare_data.py) uses original Sarkisyan labels and TAPE sequences/split membership. It checks full-source and archive-member SHA-256 hashes, reconstructs **recorded** source genotypes for matching, and verifies TAPE's rounded label within `1e-6` of the original value. Records with shorter sequence strings are excluded; no padding or speculative alignment is introduced. Details and exclusion counts are in [provenance](data-provenance.md).
+The [preparation script](../scripts/prepare_data.py) uses original Sarkisyan labels and Tasks Assessing Protein Embeddings (TAPE) sequences/split membership. It checks full-source and archive-member SHA-256 hashes, reconstructs **recorded** source genotypes for matching, and verifies TAPE's rounded label within `1e-6` of the original value. Records with shorter sequence strings are excluded; no padding or speculative alignment is introduced. Details and exclusion counts are in [provenance](data-provenance.md).
 
 Full-length train and validation records are pooled, sorted by `SHA256("gfp-active-learning-v1|" + sequence)`, and assigned in order: 2,400 to the acquisition pool and 400 to local evaluation. Original TAPE test records are sorted separately and the first 800 form the distant evaluation set. This subset selection does not inspect phenotype values. It creates a new small benchmark; it is not the original TAPE benchmark score.
 
@@ -16,20 +16,20 @@ The model is scikit-learn `RandomForestRegressor` with 64 trees, maximum depth 1
 
 ## Acquisition policy
 
-Four seeds (11, 29, 47, 83) each define a 64-record uniformly sampled initial labeled set shared by both policies. Budgets are 64, 128, 192, 256, and 384. A separate seeded acquisition RNG uses `seed + 10000`.
+Four seeds (11, 29, 47, 83) each define a 64-record uniformly sampled initial labeled set shared by both policies. Budgets are 64, 128, 192, 256, and 384. A separate seeded acquisition random-number generator (RNG) uses `seed + 10000`.
 
 1. Fit only on currently acquired pool labels.
 2. Evaluate the fitted model on the two fixed evaluation sets for reporting. These metrics are not arguments to acquisition.
 3. For random acquisition, sample the next batch uniformly without replacement.
 4. For the uncertainty/diversity policy, calculate the standard deviation of individual-tree predictions for remaining pool records. Rank by this heuristic, with seeded random tie-breaking, and retain up to four times the requested batch size.
 5. Within that shortlist, greedily choose the sequence with greatest minimum Hamming distance to the labeled set and the already chosen batch. Break ties by higher tree disagreement, then the shortlist's order.
-6. Reveal only the chosen stored labels through the `PoolOracle`. Refit from scratch at the next budget.
+6. Reveal only the chosen stored labels through the `PoolOracle`, the interface that permits access only to acquired labels. This is a programming boundary, not protection against deliberately inspecting the public source file. Refit from scratch at the next budget.
 
 This hybrid is not ordinary pure uncertainty sampling, a formal optimal-design method, or calibrated Bayesian optimization. It favors diversity only within an uncertainty-screened shortlist. It does not assume a Gaussian predictive distribution, and its tree spread is never converted into a confidence level.
 
 ## Evaluation and uncertainty
 
-For each seed/budget/policy/evaluation set, report RMSE, mean absolute error, and Spearman rank correlation. Constant outcomes or predictions give an undefined rank correlation (`None`/empty CSV field), not an invented zero. Learning curves display means and one sample SD across four acquisition seeds (`ddof=1`). Paired final-budget RMSE differences subtract the random score from the heuristic score within each seed. These are descriptive comparisons on shared outcomes, not four independent scientific studies or a significance test.
+For each seed/budget/policy/evaluation set, report root mean squared error (RMSE), mean absolute error (MAE), and Spearman rank correlation, which compares prediction and outcome ranks. Constant outcomes or predictions give an undefined rank correlation (`None`/empty CSV field), not an invented zero. Learning curves display means and one sample standard deviation (SD) across four acquisition seeds (`ddof=1`). Paired final-budget RMSE differences subtract the random score from the heuristic score within each seed. These are descriptive comparisons on shared outcomes, not four independent scientific studies or a significance test.
 
 One all-pool-label fit supplies context for the same model family. It is neither a mathematical upper bound nor a fair label-budget competitor. Lower uncertainty or additional labels need not improve every observed score monotonically.
 
@@ -40,6 +40,8 @@ The evaluation sets are excluded from training and acquisition, but their metric
 Tests reject malformed sequences, duplicated records, nonfinite labels, broken hashes, invalid data roles, and illegal oracle queries. Synthetic counterfactual tests alter evaluation outcomes or only never-acquired pool labels and require acquisition histories to stay identical. Hand-calculated feature/distance/metric tests check numerical semantics. The same seed must reproduce the same small simulation.
 
 CI reruns the full benchmark and compares six CSVs with exact categorical values and numeric tolerance `rtol=1e-6, atol=1e-7`. The tolerance allows harmless floating-point variation, not arbitrary result drift. Input bytes and source hashes must match exactly. PNG bytes and library patch-version strings are not numerical scientific results and are not forced to match byte-for-byte.
+
+The [assumption register](assumptions.md) explains why the subset sizes, budgets, model settings and four-times shortlist were chosen, what has been checked, and what remains an untested design choice. The [glossary](glossary.md) defines the terms used here.
 
 ## Scientific basis
 

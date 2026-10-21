@@ -1,5 +1,7 @@
 # GFP active learning
 
+GFP means green fluorescent protein, a protein used as a light-emitting biological reporter.
+
 **Can a model choose which existing brightness measurements to reveal next and learn more efficiently than random sampling?** This repository turns that question into a small, reproducible benchmark with an answer that depends on the evaluation set.
 
 ## Why this project
@@ -20,7 +22,7 @@ An independent saved-run audit checks query identities, source labels, budgets, 
 
 ## Quick start
 
-Python 3.12 is used in CI. The included 1.3 MB CSV makes the analysis offline after dependency installation; no account, API key, GPU, or model download is needed.
+Python 3.12 is used in CI. The included 1.3 MB CSV makes the analysis offline after dependency installation; no account, application programming interface (API) key, graphics processing unit (GPU), or model download is needed.
 
 ```bash
 python -m venv .venv
@@ -31,7 +33,7 @@ python -m gfp_active_learning --output-dir reproduced-results
 python scripts/check_reproduction.py results reproduced-results
 ```
 
-The full benchmark takes well under two minutes on the development CPU. It writes six CSV tables, a run manifest, a plot, and a short [results report](results/report.md). The reproduction check uses strict input hashes and tolerant numeric comparisons; it does not require identical PNG bytes across platforms.
+The recorded development run took under two minutes on a central processing unit (CPU); runtime depends on the machine and environment. It writes six CSV tables, a run manifest, a plot, and a short [results report](results/report.md). The reproduction check uses strict input hashes and tolerant numeric comparisons; it does not require identical PNG bytes across platforms.
 
 To rebuild the subset from the two pinned public source downloads:
 
@@ -63,7 +65,7 @@ At 384 revealed labels, lower root mean squared error (RMSE) is better:
 | Local, ≤3 source substitutions | 0.7715 ± 0.0096 | 0.7570 ± 0.0162 |
 | More mutated, ≥4 source substitutions | 1.1651 ± 0.0632 | 1.1799 ± 0.0406 |
 
-Units are the source's log-brightness scale. SD describes variation across four seeds on the same data; it is not a confidence interval or biological replication. The heuristic's small average local advantage did not carry over to the more mutated set. This is a descriptive result from one frozen subset and one deliberately simple model, not proof that either policy is generally better.
+Units are the source's log-brightness scale. Standard deviation (SD) describes variation across four seeds on the same data; it is not a confidence interval or biological replication. The heuristic's small average local advantage did not carry over to the more mutated set. This is a descriptive result from one frozen subset and one deliberately simple model, not proof that either policy is generally better.
 
 ![Learning curves](results/learning_curves.png)
 
@@ -77,7 +79,7 @@ A separate [four-policy ablation](experiments/uncertainty_ablation/README.md) is
 
 ## Practical use and limitations
 
-Cell-based GFP fluorescence depends on expression, folding, and maturation as well as the protein's photophysical properties. It is not a direct measurement of intrinsic molecular brightness or a general enzyme-activity label. The model uses residue composition and mutation count, so it discards position-specific information. Its tree disagreement is a ranking heuristic, not calibrated uncertainty. The fixed measured pool omits prospective assay failures, changing experimental conditions, and unobserved sequence space.
+Cell-based GFP fluorescence depends on expression (protein production), folding into a three-dimensional structure, and maturation of its light-emitting group, as well as the protein's photophysical properties ([Sarkisyan et al., 2016](https://doi.org/10.1038/nature17995); [Balleza et al., 2018](https://doi.org/10.1038/nmeth.4509)). It is not a direct measurement of intrinsic molecular brightness or a general enzyme-activity label. The model uses residue composition and mutation count, so it discards position-specific information. Its tree disagreement is a ranking heuristic, not calibrated uncertainty. The fixed measured pool omits prospective assay failures, changing experimental conditions, and unobserved sequence space.
 
 The scientific starting points are [Sarkisyan et al.](https://doi.org/10.1038/nature17995), [TAPE](https://proceedings.neurips.cc/paper/2019/hash/37f65c068b7723cd7809ee2d31d7861c-Abstract.html), and [Greenman et al.'s uncertainty benchmark](https://doi.org/10.1371/journal.pcbi.1012639). This is an independent educational implementation, not a reproduction of their model results. Code is [MIT licensed](LICENSE); the adapted scientific data retain [CC BY 4.0 attribution](DATA_LICENSE.md).
 
@@ -88,6 +90,9 @@ The scientific starting points are [Sarkisyan et al.](https://doi.org/10.1038/na
 | [Project context](docs/project-context.md) | Motivation and main themes |
 | [Biology and concepts](docs/biology-and-concepts.md) | GFP phenotype and the learning problem |
 | [Methods](docs/methods.md) | Features, policies, metrics and limits |
+| [Glossary](docs/glossary.md) | Biological, statistical and software vocabulary |
+| [Assumptions](docs/assumptions.md) | Design choices, rationales, checks and consequences |
+| [Reference audit](docs/reference-audit.json) and [review record](docs/review-2026-10-20.md) | Verified source coverage and corrections |
 | [References](docs/references.md) | Scientific sources |
 | [Data provenance](docs/data-provenance.md) | Exact source matching, splits and exclusions |
 | [Practical use](docs/practical-use.md) | Audit contract and worked example |

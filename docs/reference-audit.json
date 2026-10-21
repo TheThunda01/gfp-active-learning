@@ -1,0 +1,288 @@
+{
+  "review_date": "2026-10-20",
+  "scope": "GFP benchmark and uncertainty-component ablation",
+  "limits": [
+    "Targeted verification of sources already used plus directly relevant official documentation; not a new systematic search.",
+    "Access levels distinguish full-text sections, abstracts and metadata. Historical search logs are preserved.",
+    "A source supports only the claims listed; project-specific results come from local data/code and are not attributed to literature."
+  ],
+  "references": [
+    {
+      "id": "sarkisyan2016",
+      "source_type": "peer_reviewed_article",
+      "title": "Local fitness landscape of the green fluorescent protein",
+      "authors": "Sarkisyan KS et al.",
+      "year": 2016,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/27193686/",
+      "checked_on": "2026-10-20",
+      "access_level": "full_text",
+      "metadata_status": "verified",
+      "supported_claims": [
+        "Original measured GFP sequence-phenotype landscape; fluorescence and epistasis context."
+      ],
+      "limitations": [
+        "The present subset and forest do not reproduce the original fitted landscape model.",
+        "Full PMC body retrieved; genotype/label details checked against archive metadata."
+      ],
+      "corrections": [],
+      "doi": "10.1038/nature17995",
+      "pmid": "27193686",
+      "alternate_urls": [
+        "https://doi.org/10.1038/nature17995"
+      ]
+    },
+    {
+      "id": "figshare3102154",
+      "source_type": "dataset",
+      "title": "Local fitness landscape of the green fluorescent protein",
+      "authors": "Dmitry Bolotin (archive depositor)",
+      "year": 2016,
+      "url": "https://doi.org/10.6084/m9.figshare.3102154.v1",
+      "checked_on": "2026-10-20",
+      "access_level": "metadata_only",
+      "metadata_status": "verified",
+      "supported_claims": [
+        "Version 1 source files, medianBrightness interpretation, file identity and CC BY 4.0 license."
+      ],
+      "limitations": [
+        "Metadata does not independently validate the underlying measurements."
+      ],
+      "corrections": [],
+      "version": "1",
+      "doi": "10.6084/m9.figshare.3102154.v1",
+      "alternate_urls": [
+        "https://api.figshare.com/v2/articles/3102154/versions/1"
+      ]
+    },
+    {
+      "id": "rao2019",
+      "source_type": "peer_reviewed_conference_paper",
+      "title": "Evaluating Protein Transfer Learning with TAPE",
+      "authors": "Rao R et al.",
+      "year": 2019,
+      "url": "https://proceedings.neurips.cc/paper/2019/hash/37f65c068b7723cd7809ee2d31d7861c-Abstract.html",
+      "checked_on": "2026-10-20",
+      "access_level": "abstract",
+      "metadata_status": "verified",
+      "supported_claims": [
+        "TAPE means Tasks Assessing Protein Embeddings and provides protein prediction benchmarks."
+      ],
+      "limitations": [
+        "Official proceedings abstract and repository README inspected; paper PDF fetch timed out in this editorial check.",
+        "Exact subset role boundaries are also directly checked in the pinned derivative and local data preparation, not inferred solely from the abstract."
+      ],
+      "corrections": [],
+      "version": "NeurIPS 32 (2019)",
+      "alternate_urls": [
+        "https://arxiv.org/abs/1906.08230"
+      ]
+    },
+    {
+      "id": "greenman2025",
+      "source_type": "peer_reviewed_article",
+      "title": "Benchmarking uncertainty quantification for protein engineering",
+      "authors": [
+        "Greenman KP",
+        "Amini AP",
+        "Yang KK"
+      ],
+      "year": 2025,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/39775201/",
+      "checked_on": "2026-10-20",
+      "access_level": "full_text",
+      "metadata_status": "verified",
+      "supported_claims": [
+        "Uncertainty quality and acquisition outcomes vary by task, representation, split and metric.",
+        "Uncertainty diagnostics alone do not guarantee acquisition gains."
+      ],
+      "limitations": [
+        "Complete PMC body retrieved in two parts; its models and data are not reproduced here."
+      ],
+      "corrections": [],
+      "doi": "10.1371/journal.pcbi.1012639",
+      "pmid": "39775201",
+      "alternate_urls": [
+        "https://doi.org/10.1371/journal.pcbi.1012639"
+      ]
+    },
+    {
+      "id": "balleza2018",
+      "source_type": "peer_reviewed_article",
+      "title": "Systematic characterization of maturation time of fluorescent proteins in living cells",
+      "authors": [
+        "Balleza E",
+        "Kim JM",
+        "Cluzel P"
+      ],
+      "year": 2018,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/29320486/",
+      "checked_on": "2026-10-20",
+      "access_level": "full_text",
+      "metadata_status": "verified",
+      "supported_claims": [
+        "Maturation influences interpretation of cellular fluorescent-protein signals."
+      ],
+      "limitations": [
+        "Relevant introduction and results sections retrieved, not the complete body.",
+        "Different experiment; no quantitative maturation effect transferred to this GFP dataset.",
+        "2018 issue year and 20 November 2017 online publication both verified; earlier date statement was already correct."
+      ],
+      "corrections": [],
+      "doi": "10.1038/nmeth.4509",
+      "pmid": "29320486",
+      "alternate_urls": [
+        "https://doi.org/10.1038/nmeth.4509"
+      ]
+    },
+    {
+      "id": "parkinson2023",
+      "source_type": "peer_reviewed_article",
+      "title": "Linear-Scaling Kernels for Protein Sequences and Small Molecules Outperform Deep Learning While Providing Uncertainty Quantitation and Improved Interpretability",
+      "authors": [
+        "Parkinson J",
+        "Wang W"
+      ],
+      "year": 2023,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/37498239/",
+      "checked_on": "2026-10-20",
+      "access_level": "abstract",
+      "metadata_status": "corrected",
+      "supported_claims": [
+        "Alternative kernel methods and uncertainty evaluation exist for molecular/sequence prediction."
+      ],
+      "limitations": [
+        "Abstract only. No performance result is adopted, and no kernel implementation was inspected."
+      ],
+      "corrections": [
+        "Added missing complete bibliography entry for a source already cited in the literature review."
+      ],
+      "doi": "10.1021/acs.jcim.3c00601",
+      "pmid": "37498239",
+      "alternate_urls": [
+        "https://doi.org/10.1021/acs.jcim.3c00601"
+      ]
+    },
+    {
+      "id": "luo2025",
+      "source_type": "peer_reviewed_article",
+      "title": "Benchmarking recent computational tools for DNA-binding protein identification",
+      "authors": "Luo X et al.",
+      "year": 2025,
+      "url": "https://pubmed.ncbi.nlm.nih.gov/39657630/",
+      "checked_on": "2026-10-20",
+      "access_level": "full_text",
+      "metadata_status": "corrected",
+      "supported_claims": [
+        "Data leakage can inflate evaluation in the studied DNA-binding-protein identification setting."
+      ],
+      "limitations": [
+        "Relevant introduction retrieved in this editorial check; earlier rapid review used the abstract.",
+        "This is not GFP regression; no effect size or method ranking transfers.",
+        "Issue year is 2025 (volume 26, issue 1); first online publication was 22 November 2024."
+      ],
+      "corrections": [
+        "Added missing complete bibliography entry and clarified online versus issue year."
+      ],
+      "doi": "10.1093/bib/bbae634",
+      "pmid": "39657630",
+      "alternate_urls": [
+        "https://doi.org/10.1093/bib/bbae634"
+      ]
+    },
+    {
+      "id": "tape_repo",
+      "source_type": "official_software_documentation",
+      "title": "TAPE README",
+      "authors": "Project maintainers",
+      "year": null,
+      "url": "https://github.com/songlab-cal/tape",
+      "checked_on": "2026-10-20",
+      "access_level": "official_documentation",
+      "metadata_status": "verified",
+      "supported_claims": [
+        "Official raw fluorescence derivative link and distinction between later PyTorch and original-paper code."
+      ],
+      "limitations": [
+        "README inspected; external model code not executed or copied."
+      ],
+      "corrections": [],
+      "version": "README observed blob 587a97c71bac520c481ce74bb3b0fd98b99f82c4"
+    },
+    {
+      "id": "protein_uq_repo",
+      "source_type": "official_software_documentation",
+      "title": "Protein UQ README",
+      "authors": "Project maintainers",
+      "year": null,
+      "url": "https://github.com/microsoft/protein-uq",
+      "checked_on": "2026-10-20",
+      "access_level": "official_documentation",
+      "metadata_status": "verified",
+      "supported_claims": [
+        "Separate model, active-learning and optimization reproduction workflows."
+      ],
+      "limitations": [
+        "No source implementation executed or copied; no recommendation of its unrelated datasets."
+      ],
+      "corrections": [],
+      "version": "README observed blob 30a91a134bf9374ce6d5f85669bc9e9955d5cdd5"
+    },
+    {
+      "id": "sklearn_rf",
+      "source_type": "official_software_documentation",
+      "title": "RandomForestRegressor",
+      "authors": "Project maintainers",
+      "year": null,
+      "url": "https://scikit-learn.org/1.8/modules/generated/sklearn.ensemble.RandomForestRegressor.html",
+      "checked_on": "2026-10-20",
+      "access_level": "official_documentation",
+      "metadata_status": "verified",
+      "supported_claims": [
+        "Bootstrap, mean prediction and seeded estimator semantics."
+      ],
+      "limitations": [
+        "Does not certify calibrated uncertainty from tree disagreement."
+      ],
+      "corrections": [],
+      "version": "1.8.0"
+    },
+    {
+      "id": "sklearn_metrics",
+      "source_type": "official_software_documentation",
+      "title": "Metrics and scoring: regression metrics",
+      "authors": "Project maintainers",
+      "year": null,
+      "url": "https://scikit-learn.org/1.8/modules/model_evaluation.html#regression-metrics",
+      "checked_on": "2026-10-20",
+      "access_level": "official_documentation",
+      "metadata_status": "verified",
+      "supported_claims": [
+        "Definitions of regression-error metrics."
+      ],
+      "limitations": [
+        "Arithmetic definitions do not establish biological validity."
+      ],
+      "corrections": [],
+      "version": "1.8.0"
+    },
+    {
+      "id": "scipy_spearman",
+      "source_type": "official_software_documentation",
+      "title": "spearmanr",
+      "authors": "Project maintainers",
+      "year": null,
+      "url": "https://docs.scipy.org/doc/scipy-1.17.0/reference/generated/scipy.stats.spearmanr.html",
+      "checked_on": "2026-10-20",
+      "access_level": "official_documentation",
+      "metadata_status": "verified",
+      "supported_claims": [
+        "Spearman measures monotonic rank association; constant input yields undefined correlation."
+      ],
+      "limitations": [
+        "No p-value inference is used in this project."
+      ],
+      "corrections": [],
+      "version": "1.17.0"
+    }
+  ]
+}

@@ -284,5 +284,32 @@
       "corrections": [],
       "version": "1.17.0"
     }
+  ],
+  "follow_up_reviews": [
+    {
+      "review_date": "2026-10-21",
+      "scope": "Targeted maintenance and scientific-language recheck; earlier source-by-source dates and historical search logs retained.",
+      "source_checks": [
+        {
+          "reference_id": "sarkisyan2016",
+          "access_level_this_review": "abstract",
+          "checked": "PubMed abstract and metadata: measured avGFP fluorescence landscape; no claim to reproduce the original fitted model."
+        },
+        {
+          "reference_id": "figshare3102154",
+          "access_level_this_review": "metadata_only",
+          "checked": "Version-1 API description, file list and CC BY 4.0: medianBrightness is median log brightness across barcodes sharing an amino-acid genotype."
+        },
+        {
+          "reference_id": "greenman2025",
+          "access_level_this_review": "abstract",
+          "checked": "Current PubMed abstract: uncertainty results depend on task, split and metric; no method ranking transferred."
+        }
+      ],
+      "limits": [
+        "This follow-up is not a new systematic literature search or comprehensive supplementary-material appraisal.",
+        "Local numerical reproduction verifies calculations, not biological generalization."
+      ]
+    }
   ]
 }

@@ -26,7 +26,9 @@ Python 3.12 is used in CI. The included 1.3 MB CSV makes the analysis offline af
 
 ```bash
 python -m venv .venv
+# macOS/Linux:
 source .venv/bin/activate
+# Windows PowerShell instead: .venv\Scripts\Activate.ps1
 python -m pip install -r requirements.txt
 python -m unittest discover -s tests -v
 python -m gfp_active_learning --output-dir reproduced-results
@@ -93,6 +95,7 @@ The scientific starting points are [Sarkisyan et al.](https://doi.org/10.1038/na
 | [Glossary](docs/glossary.md) | Biological, statistical and software vocabulary |
 | [Assumptions](docs/assumptions.md) | Design choices, rationales, checks and consequences |
 | [Reference audit](docs/reference-audit.json) and [review record](docs/review-2026-10-20.md) | Verified source coverage and corrections |
+| [Maintenance review, 21 October 2026](docs/review-2026-10-21.md) | Current source checks, reproduction and remaining work |
 | [References](docs/references.md) | Scientific sources |
 | [Data provenance](docs/data-provenance.md) | Exact source matching, splits and exclusions |
 | [Practical use](docs/practical-use.md) | Audit contract and worked example |

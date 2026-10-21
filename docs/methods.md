@@ -48,7 +48,7 @@ The [assumption register](assumptions.md) explains why the subset sizes, budgets
 - [Sarkisyan et al., Nature (2016)](https://doi.org/10.1038/nature17995): original GFP landscape and measurement context.
 - [Rao et al., NeurIPS (2019)](https://proceedings.neurips.cc/paper/2019/hash/37f65c068b7723cd7809ee2d31d7861c-Abstract.html): TAPE data/task provenance and evaluation context.
 - [Greenman, Amini, and Yang, PLOS Computational Biology (2025)](https://doi.org/10.1371/journal.pcbi.1012639): direct benchmark evidence that uncertainty and acquisition methods vary across tasks. This implementation is not their model or a reproduction of their results.
-- [Official scikit-learn random forest documentation](https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.RandomForestRegressor.html): estimator semantics and parameter definitions.
+- [Official scikit-learn 1.8 random forest documentation](https://scikit-learn.org/1.8/modules/generated/sklearn.ensemble.RandomForestRegressor.html): estimator semantics and parameter definitions for the pinned release.
 
 
 ## Final-budget prediction cross-check (round 2)

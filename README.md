@@ -73,6 +73,8 @@ The [example audit](examples/run-audit.json) verifies 3,072 acquisitions, 80 met
 
 The [final-prediction check](examples/final-predictions/verification.json) joins 9,600 exported predictions to source labels and independently reproduces all 16 final-budget metric rows. Only the final budget is exported; earlier trajectories are unchanged.
 
+A separate [four-policy ablation](experiments/uncertainty_ablation/README.md) isolates uncertainty-only, diversity-only, and combined selection against random with the same starts, budgets and model. Diversity-only had the lowest distant-set mean RMSE; uncertainty-only had the lowest local-set mean. The recorded prediction that combined would help most at distance was not supported in this exploratory reuse of the historical subset. The original results above remain unchanged.
+
 ## Practical use and limitations
 
 Cell-based GFP fluorescence depends on expression, folding, and maturation as well as the protein's photophysical properties. It is not a direct measurement of intrinsic molecular brightness or a general enzyme-activity label. The model uses residue composition and mutation count, so it discards position-specific information. Its tree disagreement is a ranking heuristic, not calibrated uncertainty. The fixed measured pool omits prospective assay failures, changing experimental conditions, and unobserved sequence space.

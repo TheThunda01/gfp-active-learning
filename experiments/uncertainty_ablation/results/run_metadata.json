@@ -1,0 +1,72 @@
+{
+  "experiment": "uncertainty_ablation",
+  "mode": "exploratory reuse of historical public measurements",
+  "user_prediction": "Combined policy will help most on more-distant variants",
+  "user_reason": null,
+  "plan_sha256": "fbb890a0953965725ffc3f26ef8337d0d4040375ad62ac3e75fef7506e8286fa",
+  "dataset_sha256": "dd507d203c83db659000ff743ecf7afa77b30e284ecc248c2eb22aa4d474bdec",
+  "split_fingerprints": {
+    "pool": "9a7b8f5c9ad0cffb280f341c0a4f7effbae1e5bbcd302b0c15b4092ac11d3b95",
+    "local_test": "3dbbfe715e9e5855edca5db745168a1dba50d766b7382932167c5e1bb88c7242",
+    "distant_test": "e6c7ed3e48919a6f18f1c4a7c16b9f17220a9af622063040f558c2ed6468bcdf"
+  },
+  "policies": [
+    "random",
+    "uncertainty_only",
+    "diversity_only",
+    "combined"
+  ],
+  "budgets": [
+    64,
+    128,
+    192,
+    256,
+    384
+  ],
+  "seeds": [
+    11,
+    29,
+    47,
+    83
+  ],
+  "forest": {
+    "bootstrap": true,
+    "ccp_alpha": 0.0,
+    "criterion": "squared_error",
+    "max_depth": 10,
+    "max_features": 1.0,
+    "max_leaf_nodes": null,
+    "max_samples": null,
+    "min_impurity_decrease": 0.0,
+    "min_samples_leaf": 2,
+    "min_samples_split": 2,
+    "min_weight_fraction_leaf": 0.0,
+    "monotonic_cst": null,
+    "n_estimators": 64,
+    "n_jobs": 1,
+    "oob_score": false,
+    "random_state": 0,
+    "verbose": 0,
+    "warm_start": false
+  },
+  "model_seed_rule": "seed + budget",
+  "historical_random_combined_checks_passed": true,
+  "code_sha256": "3ad3eaf924094c6cda2146d73fdcc2e6c22ff25f11cc4c27be74e909ca2c6d52",
+  "versions": {
+    "numpy": "2.3.5",
+    "scipy": "1.17.0",
+    "scikit-learn": "1.8.0",
+    "matplotlib": "3.10.8"
+  },
+  "outputs_sha256": {
+    "learning_curves.png": "2f797a5c1effe4779590ff4110c58781437053f87bf00b56a44cc12a020a1148",
+    "final_predictions.csv.gz": "f77ece691c9bf5f24ac9b7f934ae560f39a4dcb7bb73e54934e8070d6be53fbc",
+    "paired_final.csv": "dbbc5de83ab6c6f0c7e58fa054e374a1291f71f9b72d87ba222a59c41c375424",
+    "report.md": "687ba3213393b1e3df2720ccb1d57ebab7f7af5d8b44fc0a9ec45fda8f9d4457",
+    "distance_benefit_contrast.csv": "9f551e70b41aa80249f56c4529c27bc9d6189dc463cd30a22dbe266377b5a71d",
+    "learning_curves.csv": "fe54316f5a55c3b2e6cb3439275515138d7fd3400e0610e700ad817cebd893ea",
+    "acquisition_overlap.csv": "355ffe332d964678e03f396eeccfbd77c10377868f1a3ee31f1f835bcc560420",
+    "learning_summary.csv": "e5e1f21d6d64c08ba84214fe7a0ed450c8e67a3776bb62f16f908c6600ad9ae2",
+    "query_history.csv": "47f938a3ec44c9e98febe118f3a68310a80e3245cdfd4b7e11fbe20e73360a44"
+  }
+}

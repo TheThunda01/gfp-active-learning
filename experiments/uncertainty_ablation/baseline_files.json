@@ -1,0 +1,21 @@
+{
+  "data/README.md": "d902c3bd125b93d795c5552855f51f921b4821abeb549a18dac0eeaf168ec6d5",
+  "data/dataset.csv": "dd507d203c83db659000ff743ecf7afa77b30e284ecc248c2eb22aa4d474bdec",
+  "data/manifest.json": "8d5cd5c76ca757af8c5159efe08fab101aae46d71d35c07b19be21ba66d359a1",
+  "data/source_metadata.json": "49ebe7a52e5104cb12f805c11bc33a445fd0a0322cb10a3df2c83c9b3d258b01",
+  "gfp_active_learning/__init__.py": "c32b1dba73a4335d9cb8b68d0a99a2bd5106524c6eb257ed2708daa6d0cb860e",
+  "gfp_active_learning/__main__.py": "b5350074bedb2f576ee12ef1ad09106a8c2e3b342c2191edf9b44ab9f85d839c",
+  "gfp_active_learning/audit.py": "b051701d1af9f333c65153078436c307989fb4502dab3ba44de46c5270ae1ab1",
+  "gfp_active_learning/benchmark.py": "006d132f98474539ad673fd95f25be40350d345a16df41c70c53e59c09b9b304",
+  "gfp_active_learning/data.py": "674ba7fc7b1707db9a78ab5b385349e6c90ebe1a682a03b6c961f408accb0636",
+  "gfp_active_learning/predictions.py": "e66e0cabe43e11efab742e617fac27bd60a422c51b5e80a371b45ceb6edf51c3",
+  "results/all_pool_reference.csv": "52dae501f0eaede78c676f560e25321441adb54a550697edce7ae503a04188c5",
+  "results/distance_audit.csv": "8893e4541325524797b38014d42dfaff9df41325bc4a055a100cd414d98193c3",
+  "results/learning_curves.csv": "c392303a8b2c65ee902c9e2115e7f743428d080043268740660c11b07c180f9e",
+  "results/learning_curves.png": "a46b88e6139e1b1133c345ff657adea9d4e8a09b53e730b3f4babeedee037233",
+  "results/learning_summary.csv": "c59ed8f7074849d288e43603bc4639d005978ea10e24c623423f323402d2daef",
+  "results/paired_final_differences.csv": "965234e8fe774f1879e1762e6262f5bba6a8597cc8a106f8c9e896f2145578b1",
+  "results/query_history.csv": "536af17c738dc6d31c4b7d21319f86ec44fae6dcfbabfceccdf24108703984df",
+  "results/report.md": "757fcd4e84c67146cb6771ad0739f01ebe42658838e65b13389a3b3e07c4a291",
+  "results/run_metadata.json": "2dd2ef3a4aa7d3ae92e1d7ac37191050bead8ab6b8335971bcfa56a391471fbd"
+}

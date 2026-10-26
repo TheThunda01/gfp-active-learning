@@ -2,7 +2,7 @@
 
 ## Where this fits
 
-This is a small retrospective benchmark (a comparison using existing observations) for checking how data acquisition—choosing which labels to reveal—affects prediction on already measured green fluorescent protein (GFP) records. The saved-run audit is useful when reviewing a local run, receiving result files from someone else or checking that a figure was built from a coherent experiment record. It checks the published contract without fitting another model.
+This retrospective benchmark tests how choosing labels to reveal affects prediction on existing green fluorescent protein (GFP) measurements. Use the saved-run audit to check a local run, received result files, or the records behind a figure. It checks the published contract without fitting another model.
 
 ## Input and output contract
 
@@ -30,7 +30,7 @@ python -m gfp_active_learning.predictions verify --results-dir reproduced-result
 
 The included [example audit](../examples/run-audit.json) passes with 3,072 queried rows, 80 metric rows, 20 aggregate rows and eight paired comparisons. Each policy acquires 384 unique pool observations for each seed. The policies share the exact seeded initial set. This supports traceability of the run, not a conclusion that either policy will work better in a laboratory.
 
-The comparison script and audit answer different questions. Comparison checks agreement with recorded numerical outputs, allowing small floating-point differences. The audit recalculates structural and arithmetic invariants from the supplied records and verified source. The new final-prediction export now supplies per-observation evidence for independently reconstructing final-budget metrics. Full benchmark reproduction remains necessary for checking earlier budgets and acquisition.
+The comparison script checks agreement with recorded numerical outputs, allowing small floating-point differences. The audit instead checks identities, counts and arithmetic within the supplied records against the verified source. The final-prediction export supplies individual predictions for independently reconstructing final-budget metrics. Checking earlier budgets and acquisition still requires full benchmark reproduction.
 
 ## Checks before relying on a result
 
@@ -45,7 +45,7 @@ The [glossary](glossary.md) defines file and statistical terms; the [assumption 
 
 ## Known limits
 
-A consistent artifact set can still come from a poor model. Aggregate metrics can be internally consistent while predictions are wrong. The saved-run audit itself does not reconstruct predictions; use the separate final-prediction verifier for the final budget. Earlier-budget predictions are not exported. It checks the current fixed experiment, not arbitrary externally configured runs. The related-sequence split, four shared-data seeds, coarse descriptors and uncalibrated tree disagreement remain unchanged.
+Consistent records do not guarantee accurate predictions. The saved-run audit checks identities and aggregate arithmetic; use the separate final-prediction verifier to reconstruct final-budget metrics. The project exports no earlier-budget predictions and checks only the fixed experiment, not arbitrary externally configured runs. Related sequences, four seeds on shared data, coarse descriptors and uncalibrated tree disagreement still limit interpretation.
 
 ## Next improvements
 

@@ -10,7 +10,7 @@ Pool/local records have at most three source-reported substitutions and distant 
 
 ## Features and fixed regression model
 
-Features are 20 residue fractions followed by source reference-relative mutation count. No feature is estimated from brightness labels; no scaling is required for the chosen trees. Residue composition is deliberately lossy and positional Hamming distance is used only for acquisition/diversity auditing.
+The features comprise 20 residue fractions followed by the source's reference-relative mutation count. They use no brightness labels, and the chosen trees require no scaling. Residue composition discards positional information; only acquisition and diversity auditing use positional Hamming distance.
 
 The model is scikit-learn `RandomForestRegressor` with 64 trees, maximum depth 10, minimum leaf size 2, all features eligible at each split, bootstrap sampling, and `n_jobs=1`. Other settings are stored in `run_metadata.json`. A simulation fit uses `random_state = seed + label_budget`; the all-pool reference uses 2026. These settings are fixed implementation choices, not the result of a hyperparameter search using the evaluation sets. No claim is made that they are optimal.
 
@@ -33,7 +33,7 @@ For each seed/budget/policy/evaluation set, report root mean squared error (RMSE
 
 One all-pool-label fit supplies context for the same model family. It is neither a mathematical upper bound nor a fair label-budget competitor. Lower uncertainty or additional labels need not improve every observed score monotonically.
 
-The evaluation sets are excluded from training and acquisition, but their metrics are now visible in this public repository. Treat future changes prompted by these results as development against an observed benchmark; they would need a fresh evaluation design for a confirmatory claim. This run does not establish performance for new protein families, different assays, or prospective experiments.
+Training and acquisition exclude the evaluation sets, but this repository publishes their metrics. Future changes prompted by those results develop the model against an observed benchmark. A confirmatory claim would need a fresh evaluation design. This run does not establish performance for new protein families, different assays, or prospective experiments.
 
 ## Reproducibility checks
 
@@ -57,4 +57,6 @@ The [assumption register](assumptions.md) explains why the subset sizes, budgets
 
 `python -m gfp_active_learning.predictions verify` checks source/result hashes and complete, unique role-correct prediction keys. It computes RMSE and MAE directly from errors and computes Spearman correlation as the correlation of independently constructed average-tie ranks; it does not call the benchmark's scoring function or SciPy's `spearmanr`. Constant ranks remain undefined. Sixteen reconstructed metric rows must agree with the saved final-budget rows under relative tolerance `1e-8` or absolute tolerance `1e-10`.
 
-The gzip is limited to 4,000,000 bytes before and after decompression. A valid but numerically discrepant export returns status 1; malformed input, changed fingerprints or unsupported keys return status 2. Verification writes `recomputed_metrics.csv` and `verification.json` beside the export, replacing prior verification files; a failed input check may leave an older report, so the command's exit status matters. The manifest fingerprints the prediction bytes and the exact acquisition/metric/configuration files. These unsigned fingerprints establish consistency, not trusted authorship. This check verifies numerical reporting for the saved experiment, not calibration, biological validity or new-family generalization.
+The verifier limits the gzip to 4,000,000 bytes before and after decompression. A valid but numerically discrepant export returns status 1; malformed input, changed fingerprints or unsupported keys return status 2. Verification writes `recomputed_metrics.csv` and `verification.json` beside the export, replacing prior verification files. A failed input check may leave an older report, so check the command's exit status.
+
+The manifest fingerprints the prediction bytes and the exact acquisition/metric/configuration files. These unsigned fingerprints establish consistency, not trusted authorship. The check verifies numerical reporting for the saved experiment, not calibration, biological validity or new-family generalization.

@@ -54,9 +54,11 @@ python -m gfp_active_learning.audit --results-dir results --out run-audit.json
 Export final-budget predictions and check their metrics independently:
 
 ```bash
-python -m gfp_active_learning.predictions export
-python -m gfp_active_learning.predictions verify
+python -m gfp_active_learning.predictions export --results-dir reproduced-results --directory reproduced-results/final-predictions
+python -m gfp_active_learning.predictions verify --results-dir reproduced-results --directory reproduced-results/final-predictions
 ```
+
+These commands use the reproduced run and write its prediction bundle under `reproduced-results/`. Export replaces prediction files at the specified destination; verification replaces its two report files. Choose a separate directory for each run to retain earlier bundles and the checked-in example.
 
 ## Example results
 

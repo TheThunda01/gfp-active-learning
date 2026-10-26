@@ -53,8 +53,10 @@ From the repository root:
 
 ```sh
 python -m unittest discover -s experiments/uncertainty_ablation/tests -v
-python -m experiments.uncertainty_ablation
+python -m experiments.uncertainty_ablation --output-dir reproduced-results/uncertainty-ablation
 ```
+
+The explicit output directory keeps this rerun separate from the recorded ablation in `experiments/uncertainty_ablation/results/`. Reusing an output directory replaces its generated files.
 
 The [full report](results/report.md) includes paired seeds and uncertainty/error diagnostics. [Learning curves](results/learning_curves.csv) preserve every seed/budget/policy result; [query history](results/query_history.csv) preserves all 6,144 selected record IDs and revealed labels. [Acquisition overlap](results/acquisition_overlap.csv), [paired differences](results/paired_final.csv), and the [distance contrast](results/distance_benefit_contrast.csv) make the comparisons reconstructable. [Final predictions](results/final_predictions.csv.gz) contain 19,200 evaluation predictions, tree spreads and absolute errors. [Run metadata](results/run_metadata.json) records the fixed plan, split fingerprints, model settings and hashes.
 

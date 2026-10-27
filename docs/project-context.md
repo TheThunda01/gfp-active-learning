@@ -11,3 +11,7 @@ The heuristic's advantage depends on the evaluation set. In the included run, it
 Readers can inspect how the project traces data, separates related sequences, controls label access, and repeats comparisons. These checks support computational reproducibility. All records were already measured, so repeating the simulation does not produce biological replication. Future changes guided by the public evaluation metrics are benchmark development rather than fresh confirmation.
 
 The [glossary](glossary.md) defines the terms and the [assumptions](assumptions.md) explain the design choices. Read the [biology guide](biology-and-concepts.md) for the conceptual background, [methods](methods.md) for exact choices, and [provenance](data-provenance.md) to trace the original data. The project is intended to demonstrate careful computational practice, not a validated strategy for a laboratory campaign.
+
+## Where this fits in the portfolio
+
+[Enzyme kinetics](https://github.com/TheThunda01/enzyme-kinetics-workbench) introduces the limits of a fitted curve. Here, the [four-policy comparison](../experiments/uncertainty_ablation/README.md) tests a recorded expectation against reused measurements. Continue to [MAPK dynamics](https://github.com/TheThunda01/mapk-dynamics-lab) for virtual observation selection in a mechanistic model. This is a conceptual reading route; the [roadmap](https://github.com/TheThunda01/TheThunda01/blob/main/PORTFOLIO_PLAN.md) identifies the candidate-selection follow-up and deeper failure analysis as proposed work.

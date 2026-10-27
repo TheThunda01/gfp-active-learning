@@ -81,6 +81,12 @@ The [final-prediction check](examples/final-predictions/verification.json) joins
 
 A separate [four-policy ablation](experiments/uncertainty_ablation/README.md) isolates uncertainty-only, diversity-only, and combined selection against random with the same starts, budgets and model. Diversity-only had the lowest distant-set mean RMSE; uncertainty-only had the lowest local-set mean. The recorded prediction that combined would help most at distance was not supported in this exploratory reuse of the historical subset. The original results above remain unchanged.
 
+### Inspect the paired seeds
+
+![Individual acquisition trajectories and final paired differences](docs/figures/seed-explorer/seed-explorer.png)
+
+The [seed explorer](docs/seed-explorer.md) makes the original two-policy run's variability inspectable: hover for each seed's exact values, hide trajectories with the legend, and compare final active-minus-random differences. Its standalone HTML and PNG come directly from the saved CSVs; complete pairings and evaluation denominators are checked before rendering. Four seeds on the same observed sequences remain descriptive variation, not independent biological replication.
+
 ## Practical use and limitations
 
 Cell-based GFP fluorescence depends on expression (protein production), folding into a three-dimensional structure, and maturation of its light-emitting group, as well as the protein's photophysical properties ([Sarkisyan et al., 2016](https://doi.org/10.1038/nature17995); [Balleza et al., 2018](https://doi.org/10.1038/nmeth.4509)). It does not directly measure intrinsic molecular brightness or general enzyme activity.

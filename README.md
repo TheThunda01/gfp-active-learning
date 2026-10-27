@@ -6,6 +6,8 @@ GFP means green fluorescent protein, a protein used as a light-emitting biologic
 
 ## Why this project
 
+This is the current investigation in [From biological measurements to better experiments](https://github.com/TheThunda01/TheThunda01/blob/main/PROJECT_GUIDE.md): testing whether a more elaborate selection rule improves prediction, then examining where it fails.
+
 The data come from the measured green fluorescent protein landscape of [Sarkisyan et al. (2016)](https://doi.org/10.1038/nature17995). Every sequence and label already existed before this project. The program hides and reveals stored measurements; it does not design proteins, run experiments, or recommend sequences for testing.
 
 ## What it does

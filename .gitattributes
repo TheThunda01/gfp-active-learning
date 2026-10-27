@@ -5,3 +5,6 @@
 *.json text eol=lf
 *.yml text eol=lf
 *.png binary
+
+# Preserve the embedded Plotly distribution as generated.
+docs/figures/seed-explorer/seed-explorer.html -whitespace linguist-generated

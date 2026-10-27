@@ -1,0 +1,11 @@
+{
+  "schema_version": 1,
+  "plotly_version": "7.1.0",
+  "source_sha256_lf_normalized": {
+    "learning_curves.csv": "c392303a8b2c65ee902c9e2115e7f743428d080043268740660c11b07c180f9e",
+    "paired_final_differences.csv": "965234e8fe774f1879e1762e6262f5bba6a8597cc8a106f8c9e896f2145578b1"
+  },
+  "curve_rows": 80,
+  "paired_differences": 8,
+  "scope": "These are the original two-policy results, not the separate four-policy ablation. Lower RMSE is better. Negative final differences favor uncertainty + diversity; positive differences favor random. Four acquisition seeds reuse the same observed evaluation sequences; they are not biological replicates or confidence intervals. The two panels share a vertical scale. Use the legend to inspect a trajectory and hover for exact values. No model was refit."
+}

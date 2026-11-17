@@ -4,7 +4,7 @@ from unittest.mock import patch
 import numpy as np
 from sklearn.ensemble import RandomForestRegressor
 
-from experiments.uncertainty_ablation.ablation import POLICIES, choose, rank_association, simulate
+from experiments.uncertainty_ablation.ablation import POLICIES, choose, contrast_description, rank_association, simulate
 from gfp_active_learning.benchmark import choose_acquisition
 from gfp_active_learning.data import descriptors
 
@@ -69,6 +69,17 @@ class AblationTests(unittest.TestCase):
             revealed={h['pool_index'] for h in baseline[1]}
             for i in set(range(len(y)))-revealed:changed[i]=12345+i
             self.assertEqual(baseline,self.run_small(p,labels=changed))
+
+    def test_contrast_description_tracks_the_measured_directions(self):
+        for values, direction, counts in [
+            ([1, 2], "larger on the distant set", "2 positive, 0 negative, and 0 tied"),
+            ([-1, 1, 0], "equal on the two sets", "1 positive, 1 negative, and 1 tied"),
+            ([-3, 1, -2, 1], "larger on the local set", "2 positive, 2 negative, and 0 tied"),
+        ]:
+            with self.subTest(values=values):
+                text = contrast_description([{"distant_minus_local_benefit": x} for x in values])
+                self.assertIn(direction, text)
+                self.assertIn(counts, text)
 
     def test_constant_association_is_undefined(self):
         self.assertIsNone(rank_association([1,1,1],[1,2,3]))

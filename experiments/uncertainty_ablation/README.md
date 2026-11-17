@@ -45,6 +45,8 @@ Tree disagreement (the spread of individual tree predictions) had substantially 
 
 One plausible follow-up is to inspect whether the uncertainty shortlist excludes candidates that the full-pool diversity rule finds useful. The present result does not prove that mechanism. The model also discards residue position and cannot extrapolate the mutation-count feature beyond the pool range. The scope stays one historical GFP subset, with related sequences and already observed labels.
 
+The two panels share an error scale. Each policy has a distinct line and marker, and the bands span one standard deviation across the four seeds.
+
 ![Four-policy learning curves](results/learning_curves.png)
 
 ## Reproduce and inspect
@@ -60,8 +62,10 @@ The explicit output directory keeps this rerun separate from the recorded ablati
 
 The [full report](results/report.md) includes paired seeds and uncertainty/error diagnostics. [Learning curves](results/learning_curves.csv) preserve every seed/budget/policy result; [query history](results/query_history.csv) preserves all 6,144 selected record IDs and revealed labels. [Acquisition overlap](results/acquisition_overlap.csv), [paired differences](results/paired_final.csv), and the [distance contrast](results/distance_benefit_contrast.csv) make the comparisons reconstructable. [Final predictions](results/final_predictions.csv.gz) contain 19,200 evaluation predictions, tree spreads and absolute errors. [Run metadata](results/run_metadata.json) records the fixed plan, split fingerprints, model settings and hashes.
 
-Seven focused tests check component isolation, shared starts, historical selectors, and independence from evaluation/unrevealed outcomes. The full run also verifies that original random/combined acquisition orders and scores reproduce, and that the [original file fingerprints](baseline_files.json) remain unchanged.
+The focused tests check component isolation, shared starts, historical selectors, independence from evaluation/unrevealed outcomes, and the direction counts in the report. The full run also verifies that original random/combined acquisition orders and scores reproduce, and that the [original file fingerprints](baseline_files.json) remain unchanged.
 
 The [assumptions](../../docs/assumptions.md) explain the fixed budgets, model, shortlist and inference limits. The [glossary](../../docs/glossary.md) defines the remaining technical terms. The date in the frozen plan is the host date (21 October); this editorial review uses the user-local date (20 October). Neither date changes the plan-before-run ordering recorded in the experiment.
 
 This experiment reuses the [original data attribution](../../DATA_LICENSE.md), [measurement background](../../docs/biology-and-concepts.md) and [model limitations](../../docs/methods.md). No new sequences, assays, calibrated uncertainty, or model tuning were introduced.
+
+The saved report and chart were redrawn from the recorded summary and contrast tables. In the run metadata, `code_sha256` identifies the original calculation and `render_code_sha256` identifies the code that redrew these two files.

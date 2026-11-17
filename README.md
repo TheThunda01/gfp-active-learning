@@ -1,8 +1,6 @@
 # GFP active learning
 
-GFP means green fluorescent protein, a protein used as a light-emitting biological reporter.
-
-**Can a model choose which existing brightness measurements to reveal next and learn more efficiently than random sampling?** This small, reproducible benchmark tests that question on two evaluation sets. In the included run, the selection heuristic slightly reduced average error on nearby sequences but increased it on more mutated sequences.
+**Which past measurements help predict the brightness of green fluorescent protein (GFP)?** This benchmark reveals historical labels one batch at a time and measures prediction error on two sets of held-out sequences. In the included run, the selection heuristic slightly reduced average error on nearby sequences but increased it on more mutated sequences.
 
 ## Why this project
 

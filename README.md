@@ -62,14 +62,14 @@ These commands use the reproduced run and write its prediction bundle under `rep
 
 ## Example results
 
-At 384 revealed labels, lower root mean squared error (RMSE) is better:
+After 384 labels, the combined rule reduced mean prediction error on nearby sequences by about **0.015** log-brightness units. On the more mutated sequences it increased error by about **0.015**. The table shows the root mean squared error (RMSE) for both policies. [Budget summaries](results/learning_summary.csv) · [Paired differences by seed](results/paired_final_differences.csv)
 
 | Evaluation set | Random RMSE, mean ± SD | Uncertainty + diversity RMSE, mean ± SD |
 | --- | ---: | ---: |
 | Local, ≤3 source substitutions | 0.7715 ± 0.0096 | 0.7570 ± 0.0162 |
 | More mutated, ≥4 source substitutions | 1.1651 ± 0.0632 | 1.1799 ± 0.0406 |
 
-Errors use the source's log-brightness scale. Standard deviation (SD) describes variation across four seeds on the same data; it is not a confidence interval or biological replication. The heuristic's small average local advantage did not carry over to the more mutated set. This result describes one frozen subset and one simple model; it does not show that either policy is generally better.
+SD describes variation across four seeds applied to the same measurements. Each row compares the two policies using the same model and evaluation sequences.
 
 ![Learning curves](results/learning_curves.png)
 

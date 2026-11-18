@@ -17,4 +17,9 @@ jobs:
         run: |
           python -c "import platform, numpy, sklearn; print(platform.platform(), platform.machine(), platform.python_version(), numpy.__version__, sklearn.__version__)"
           python -m experiments.shortlist_review.audit --output /tmp/gfp-first-shortlist.csv
-          cat /tmp/gfp-first-shortlist.csv
+          diff -u experiments/shortlist_review/results/seed_comparison.csv /tmp/gfp-first-shortlist.csv
+      - name: Check the case study, figures and results explorer
+        run: |
+          python -m unittest discover -s experiments/shortlist_review/tests -v
+          python experiments/shortlist_review/plot.py --output /tmp/gfp-shortlist-figures
+          python experiments/shortlist_review/build_explorer.py --check

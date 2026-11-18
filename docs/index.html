@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GFP shortlist choices and prediction error</title>
+<style>
+:root {
+  --ink: #172d32;
+  --muted: #445d60;
+  --teal: #17645e;
+  --ochre: #99522e;
+  --line: #c6d2cc;
+  --soft: #eef3eb;
+  --paper: #fbfcf7;
+  color-scheme: light;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font: 1rem/1.5 system-ui,sans-serif;
+}
+a {
+  color: var(--teal);
+  text-decoration-thickness: .075em;
+  text-underline-offset: .18em;
+}
+a:focus-visible,select:focus-visible,summary:focus-visible {
+  outline: 3px solid #165cba;
+  outline-offset: 3px;
+}
+main,footer {
+  max-width: 79rem;
+  margin: auto;
+  padding: 0 clamp(1rem,4vw,4rem);
+}
+header {
+  padding: clamp(1.7rem,4vw,3.5rem) 0 1.3rem;
+  border-bottom: 1px solid var(--line);
+}
+header>a {
+  font-size: .95rem;
+  font-weight: 650;
+}
+h1,h2 {
+  font-family: Georgia,serif;
+  font-weight: 550;
+  letter-spacing: -.035em;
+  line-height: 1.1;
+}
+h1 {
+  font-size: clamp(2.3rem,5vw,4.5rem);
+  margin: .62em 0 .25em;
+  max-width: 22ch;
+  text-wrap: balance;
+}
+h2 {
+  font-size: clamp(1.5rem,2.8vw,2.28rem);
+  margin: 0 0 .45rem;
+}
+header p {
+  max-width: 76ch;
+  font-size: 1.07rem;
+  margin: .7rem 0;
+}
+.controls {
+  display: flex;
+  gap: 1.3rem;
+  align-items: end;
+  flex-wrap: wrap;
+  margin: 1.4rem 0 2rem;
+}
+.controls label {
+  display: grid;
+  gap: .23rem;
+  font-size: .87rem;
+  font-weight: 650;
+}
+.controls select {
+  font: inherit;
+  background: white;
+  color: var(--ink);
+  border: 1px solid #748c84;
+  border-radius: .3rem;
+  padding: .6rem 1.65rem .6rem .65rem;
+  min-height: 44px;
+}
+[hidden] {
+  display: none!important;
+}
+.sheet {
+  display: grid;
+  grid-template-columns: 1.05fr 1fr;
+  gap: clamp(1.5rem,4.5vw,4.2rem);
+}
+section {
+  min-width: 0;
+  border-top: 3px solid var(--teal);
+  padding: 1.1rem 0 .5rem;
+}
+section>p,.note {
+  color: var(--muted);
+  margin: .3rem 0 1rem;
+  font-size: .95rem;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-variant-numeric: tabular-nums;
+  font-size: .94rem;
+}
+caption {
+  text-align: left;
+  font-weight: 650;
+  padding: .55rem 0 .7rem;
+}
+th,td {
+  text-align: left;
+  padding: .62rem .25rem;
+  border-bottom: 1px solid var(--line);
+}
+th[scope=row] {
+  font-weight: 580;
+}
+thead th {
+  font-size: .8rem;
+  color: var(--muted);
+  font-weight: 650;
+  border-block: 1px solid var(--line);
+}
+th:first-child,td:first-child {
+  padding-left: 0;
+}
+td:last-child,th:last-child {
+  padding-right: 0;
+}
+.number {
+  text-align: right;
+  white-space: nowrap;
+}
+.axis {
+  text-align: center;
+}
+.plotcell {
+  width: 44%;
+  padding-inline: .55rem;
+}
+.track,.contrast-track {
+  height: .83rem;
+  position: relative;
+  background: linear-gradient(0deg,transparent 46%,var(--line) 46%,var(--line) 54%,transparent 54%);
+}
+.track:before {
+  content: "";
+  position: absolute;
+  left: var(--reference);
+  height: 1.4rem;
+  top: -.27rem;
+  border-left: 1.5px dashed #555;
+}
+.mark {
+  position: absolute;
+  top: 50%;
+  left: var(--point);
+  height: .58rem;
+  width: .58rem;
+  border-radius: 50%;
+  background: #28474b;
+  transform: translate(-50%,-50%);
+}
+.mark.random {
+  background: white;
+  border: 2px solid #28474b;
+}
+.mark.combined {
+  background: var(--teal);
+  border-radius: .04rem;
+  transform: translate(-50%,-50%) rotate(45deg);
+}
+.contrast-track:before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  height: 1.1rem;
+  top: -.14rem;
+  border-left: 1px solid #586c69;
+}
+.delta {
+  position: absolute;
+  top: .13rem;
+  height: .56rem;
+}
+.positive {
+  background: var(--teal);
+}
+.negative {
+  background: var(--ochre);
+}
+tr[data-seed=Mean] {
+  border-top: 2px solid var(--ink);
+}
+tr[data-seed=Mean] td,tr[data-seed=Mean] th {
+  font-weight: 700;
+}
+tr[aria-current=true] {
+  background: #e1eee3;
+}
+tfoot td {
+  border: 0;
+  padding: .3rem .5rem;
+  color: var(--muted);
+  font-size: .76rem;
+}
+td.ticks>span {
+  display: inline-block;
+  width: 33.333%;
+}
+td.ticks>span:nth-child(2) {
+  text-align: center;
+}
+td.ticks>span:last-child {
+  text-align: right;
+}
+details {
+  margin: .9rem 0 1rem;
+}
+summary {
+  cursor: pointer;
+  font-weight: 620;
+  color: var(--teal);
+  padding: .3rem 0;
+}
+details td,details thead th:not(:first-child) {
+  text-align: right;
+}
+.note {
+  margin-top: .7rem;
+  font-size: .88rem;
+}
+footer {
+  margin: 1.6rem auto 2rem;
+}
+footer>div {
+  border-top: 1px solid var(--line);
+  padding-top: .9rem;
+  max-width: 100%;
+}
+footer p {
+  max-width: 83ch;
+  font-size: .9rem;
+  margin: .4rem 0;
+}
+@media(max-width:55rem) {
+  .sheet {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  .controls {
+    margin-bottom: 1.25rem;
+  }
+  h1 {
+    max-width: 21ch;
+  }
+}
+@media(max-width:24rem) {
+  main,footer {
+    padding-inline: 1rem;
+  }
+  .controls {
+    gap: .6rem;
+  }
+  table {
+    font-size: .84rem;
+  }
+  .plotcell {
+    width: 38%;
+  }
+  th,td {
+    padding-block: .56rem;
+  }
+  caption {
+    font-size: .88rem;
+  }
+}
+@media print {
+  .controls {
+    display: none;
+  }
+  main,footer {
+    padding: 0;
+  }
+  .sheet {
+    grid-template-columns: 1fr;
+  }
+  section {
+    break-inside: avoid;
+  }
+}
+.audit {
+  margin: 0 0 2.2rem;
+  padding: 1.1rem 0 .3rem;
+}
+.audit-layout {
+  display: grid;
+  grid-template-columns: minmax(15rem,.73fr) minmax(0,1.27fr);
+  gap: clamp(1.25rem,4vw,3.5rem);
+  align-items: start;
+}
+.audit-layout p { margin: .5rem 0 0; color: var(--muted); }
+.audit table td { text-align: right; }
+.audit table th[scope=col]:not(:first-child) { text-align: right; }
+.audit table caption { padding-top: .1rem; }
+.audit-row-note { font-size: .88rem; color: var(--muted); }
+@media (max-width: 55rem) {
+  .audit-layout { grid-template-columns: 1fr; gap: .8rem; }
+  .audit { margin-bottom: 1.4rem; }
+}
+</style></head><body>
+<main>
+<header><a href="https://github.com/TheThunda01/gfp-active-learning/blob/main/experiments/shortlist_review/README.md">GFP case study</a>
+<h1>What did the first shortlist leave out?</h1>
+<p>Two rules started with the same 64 archived green fluorescent protein (GFP) measurements. One chose 64 more records from the full pool. The combined rule first narrowed the pool from 2,336 records to 256. Of the 64 records chosen by diversity alone, <strong>4–15 remained eligible</strong> after screening across the four runs. The two rules ultimately chose <strong>3–8 of the same records</strong> per run.</p></header>
+<div class="controls" hidden id="controls">
+<label for="evaluation">Evaluation set<select id="evaluation"><option value="distant_test" selected>Distant · 800 variants</option><option value="local_test">Local · 400 variants</option></select></label>
+<label for="sample">Starting sample<select id="sample"><option value="mean">All four seeds</option><option value="11">Seed 11</option><option value="29">Seed 29</option><option value="47">Seed 47</option><option value="83">Seed 83</option></select></label></div>
+<noscript><p>The page shows all four seeds and the distant evaluation set. The source tables include the local results.</p></noscript>
+<section class="audit" aria-labelledby="audit-heading">
+<div class="audit-layout"><div><h2 id="audit-heading">The first 64 choices</h2>
+<p>“Eligible” counts the full-pool choices that survived the screen. “Chosen by both” counts the records both rules actually selected.</p>
+<p>After this batch, each rule had 128 labels. We measure prediction error in log-brightness units using root mean squared error (RMSE). The gap is combined RMSE minus diversity-only RMSE. Positive values mean the combined rule had higher error.</p></div>
+<div><table id="audit-table"><caption><span id="audit-place">Distant set</span> · 64 choices per seed</caption>
+<thead><tr><th scope="col">Seed</th><th scope="col">Eligible</th><th scope="col">Chosen by both</th><th scope="col">Error gap (RMSE)</th></tr></thead><tbody><tr data-audit-seed="11"><th scope="row">11</th><td>15</td><td>8</td><td class="number" data-audit-set="local_test" hidden>−0.0187</td><td class="number" data-audit-set="distant_test">+0.0972</td></tr>
+<tr data-audit-seed="29"><th scope="row">29</th><td>8</td><td>3</td><td class="number" data-audit-set="local_test" hidden>−0.0263</td><td class="number" data-audit-set="distant_test">+0.0803</td></tr>
+<tr data-audit-seed="47"><th scope="row">47</th><td>4</td><td>4</td><td class="number" data-audit-set="local_test" hidden>−0.0238</td><td class="number" data-audit-set="distant_test">−0.0033</td></tr>
+<tr data-audit-seed="83"><th scope="row">83</th><td>12</td><td>5</td><td class="number" data-audit-set="local_test" hidden>+0.0256</td><td class="number" data-audit-set="distant_test">+0.3075</td></tr></tbody></table>
+<p class="audit-row-note">Both archived choice orders matched the reconstruction for every seed. The error gaps describe what followed each batch. They cannot establish which choices caused the difference. <a href="https://github.com/TheThunda01/gfp-active-learning/blob/main/experiments/shortlist_review/README.md">Read the audit</a>.</p></div></div>
+</section>
+<div class="sheet"><section aria-labelledby="errors"><h2 id="errors">Final error at 384 labels</h2>
+<p>After 384 labels, lower RMSE means closer predictions on the selected evaluation set. The dashed line marks random selection in the current view.</p>
+<div id="score-panels" aria-live="polite" aria-atomic="true"><div data-evaluation="local_test" data-sample="mean" hidden><table class="strip"><caption>Mean across four seeds · local set · 400 variants</caption><thead><tr><th scope="col">Rule</th><th scope="col" class="axis">RMSE scale</th><th scope="col" class="number">RMSE</th></tr></thead><tbody><tr><th scope="row">Random</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:11.92255%;--point:11.92255%"><i class="mark random"></i></div></td><td class="number">0.7715</td></tr><tr><th scope="row">Uncertainty only</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:11.92255%;--point:8.91190%"><i class="mark uncertainty_only"></i></div></td><td class="number">0.7535</td></tr><tr><th scope="row">Diversity only</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:11.92255%;--point:11.64177%"><i class="mark diversity_only"></i></div></td><td class="number">0.7699</td></tr><tr><th scope="row">Combined</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:11.92255%;--point:9.49184%"><i class="mark combined"></i></div></td><td class="number">0.7570</td></tr></tbody><tfoot><tr aria-hidden="true"><td></td><td class="ticks"><span>0.7</span><span>1.0</span><span>1.3</span></td><td></td></tr></tfoot></table></div>
+<div data-evaluation="local_test" data-sample="11" hidden><table class="strip"><caption>Seed 11 · local set · 400 variants</caption><thead><tr><th scope="col">Rule</th><th scope="col" class="axis">RMSE scale</th><th scope="col" class="number">RMSE</th></tr></thead><tbody><tr><th scope="row">Random</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:13.71524%;--point:13.71524%"><i class="mark random"></i></div></td><td class="number">0.7823</td></tr><tr><th scope="row">Uncertainty only</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:13.71524%;--point:11.39134%"><i class="mark uncertainty_only"></i></div></td><td class="number">0.7683</td></tr><tr><th scope="row">Diversity only</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:13.71524%;--point:10.80178%"><i class="mark diversity_only"></i></div></td><td class="number">0.7648</td></tr><tr><th scope="row">Combined</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:13.71524%;--point:8.43141%"><i class="mark combined"></i></div></td><td class="number">0.7506</td></tr></tbody><tfoot><tr aria-hidden="true"><td></td><td class="ticks"><span>0.7</span><span>1.0</span><span>1.3</span></td><td></td></tr></tfoot></table></div>
+<div data-evaluation="local_test" data-sample="29" hidden><table class="strip"><caption>Seed 29 · local set · 400 variants</caption><thead><tr><th scope="col">Rule</th><th scope="col" class="axis">RMSE scale</th><th scope="col" class="number">RMSE</th></tr></thead><tbody><tr><th scope="row">Random</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:11.70088%;--point:11.70088%"><i class="mark random"></i></div></td><td class="number">0.7702</td></tr><tr><th scope="row">Uncertainty only</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:11.70088%;--point:10.59077%"><i class="mark uncertainty_only"></i></div></td><td class="number">0.7635</td></tr><tr><th scope="row">Diversity only</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:11.70088%;--point:13.37809%"><i class="mark diversity_only"></i></div></td><td class="number">0.7803</td></tr><tr><th scope="row">Combined</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:11.70088%;--point:10.59201%"><i class="mark combined"></i></div></td><td class="number">0.7636</td></tr></tbody><tfoot><tr aria-hidden="true"><td></td><td class="ticks"><span>0.7</span><span>1.0</span><span>1.3</span></td><td></td></tr></tfoot></table></div>
+<div data-evaluation="local_test" data-sample="47" hidden><table class="strip"><caption>Seed 47 · local set · 400 variants</caption><thead><tr><th scope="col">Rule</th><th scope="col" class="axis">RMSE scale</th><th scope="col" class="number">RMSE</th></tr></thead><tbody><tr><th scope="row">Random</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:9.88898%;--point:9.88898%"><i class="mark random"></i></div></td><td class="number">0.7593</td></tr><tr><th scope="row">Uncertainty only</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:9.88898%;--point:3.06438%"><i class="mark uncertainty_only"></i></div></td><td class="number">0.7184</td></tr><tr><th scope="row">Diversity only</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:9.88898%;--point:12.42821%"><i class="mark diversity_only"></i></div></td><td class="number">0.7746</td></tr><tr><th scope="row">Combined</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:9.88898%;--point:6.35486%"><i class="mark combined"></i></div></td><td class="number">0.7381</td></tr></tbody><tfoot><tr aria-hidden="true"><td></td><td class="ticks"><span>0.7</span><span>1.0</span><span>1.3</span></td><td></td></tr></tfoot></table></div>
+<div data-evaluation="local_test" data-sample="83" hidden><table class="strip"><caption>Seed 83 · local set · 400 variants</caption><thead><tr><th scope="col">Rule</th><th scope="col" class="axis">RMSE scale</th><th scope="col" class="number">RMSE</th></tr></thead><tbody><tr><th scope="row">Random</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:12.38510%;--point:12.38510%"><i class="mark random"></i></div></td><td class="number">0.7743</td></tr><tr><th scope="row">Uncertainty only</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:12.38510%;--point:10.60110%"><i class="mark uncertainty_only"></i></div></td><td class="number">0.7636</td></tr><tr><th scope="row">Diversity only</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:12.38510%;--point:9.95900%"><i class="mark diversity_only"></i></div></td><td class="number">0.7598</td></tr><tr><th scope="row">Combined</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:12.38510%;--point:12.58909%"><i class="mark combined"></i></div></td><td class="number">0.7755</td></tr></tbody><tfoot><tr aria-hidden="true"><td></td><td class="ticks"><span>0.7</span><span>1.0</span><span>1.3</span></td><td></td></tr></tfoot></table></div>
+<div data-evaluation="distant_test" data-sample="mean"><table class="strip"><caption>Mean across four seeds · distant set · 800 variants</caption><thead><tr><th scope="col">Rule</th><th scope="col" class="axis">RMSE scale</th><th scope="col" class="number">RMSE</th></tr></thead><tbody><tr><th scope="row">Random</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:77.51783%;--point:77.51783%"><i class="mark random"></i></div></td><td class="number">1.1651</td></tr><tr><th scope="row">Uncertainty only</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:77.51783%;--point:81.61791%"><i class="mark uncertainty_only"></i></div></td><td class="number">1.1897</td></tr><tr><th scope="row">Diversity only</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:77.51783%;--point:73.79865%"><i class="mark diversity_only"></i></div></td><td class="number">1.1428</td></tr><tr><th scope="row">Combined</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:77.51783%;--point:79.97625%"><i class="mark combined"></i></div></td><td class="number">1.1799</td></tr></tbody><tfoot><tr aria-hidden="true"><td></td><td class="ticks"><span>0.7</span><span>1.0</span><span>1.3</span></td><td></td></tr></tfoot></table></div>
+<div data-evaluation="distant_test" data-sample="11" hidden><table class="strip"><caption>Seed 11 · distant set · 800 variants</caption><thead><tr><th scope="col">Rule</th><th scope="col" class="axis">RMSE scale</th><th scope="col" class="number">RMSE</th></tr></thead><tbody><tr><th scope="row">Random</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:77.58545%;--point:77.58545%"><i class="mark random"></i></div></td><td class="number">1.1655</td></tr><tr><th scope="row">Uncertainty only</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:77.58545%;--point:75.65163%"><i class="mark uncertainty_only"></i></div></td><td class="number">1.1539</td></tr><tr><th scope="row">Diversity only</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:77.58545%;--point:74.32440%"><i class="mark diversity_only"></i></div></td><td class="number">1.1459</td></tr><tr><th scope="row">Combined</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:77.58545%;--point:71.46651%"><i class="mark combined"></i></div></td><td class="number">1.1288</td></tr></tbody><tfoot><tr aria-hidden="true"><td></td><td class="ticks"><span>0.7</span><span>1.0</span><span>1.3</span></td><td></td></tr></tfoot></table></div>
+<div data-evaluation="distant_test" data-sample="29" hidden><table class="strip"><caption>Seed 29 · distant set · 800 variants</caption><thead><tr><th scope="col">Rule</th><th scope="col" class="axis">RMSE scale</th><th scope="col" class="number">RMSE</th></tr></thead><tbody><tr><th scope="row">Random</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:75.68140%;--point:75.68140%"><i class="mark random"></i></div></td><td class="number">1.1541</td></tr><tr><th scope="row">Uncertainty only</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:75.68140%;--point:84.09103%"><i class="mark uncertainty_only"></i></div></td><td class="number">1.2045</td></tr><tr><th scope="row">Diversity only</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:75.68140%;--point:76.14646%"><i class="mark diversity_only"></i></div></td><td class="number">1.1569</td></tr><tr><th scope="row">Combined</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:75.68140%;--point:87.67277%"><i class="mark combined"></i></div></td><td class="number">1.2260</td></tr></tbody><tfoot><tr aria-hidden="true"><td></td><td class="ticks"><span>0.7</span><span>1.0</span><span>1.3</span></td><td></td></tr></tfoot></table></div>
+<div data-evaluation="distant_test" data-sample="47" hidden><table class="strip"><caption>Seed 47 · distant set · 800 variants</caption><thead><tr><th scope="col">Rule</th><th scope="col" class="axis">RMSE scale</th><th scope="col" class="number">RMSE</th></tr></thead><tbody><tr><th scope="row">Random</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:91.20298%;--point:91.20298%"><i class="mark random"></i></div></td><td class="number">1.2472</td></tr><tr><th scope="row">Uncertainty only</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:91.20298%;--point:89.39280%"><i class="mark uncertainty_only"></i></div></td><td class="number">1.2364</td></tr><tr><th scope="row">Diversity only</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:91.20298%;--point:71.94851%"><i class="mark diversity_only"></i></div></td><td class="number">1.1317</td></tr><tr><th scope="row">Combined</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:91.20298%;--point:78.74216%"><i class="mark combined"></i></div></td><td class="number">1.1725</td></tr></tbody><tfoot><tr aria-hidden="true"><td></td><td class="ticks"><span>0.7</span><span>1.0</span><span>1.3</span></td><td></td></tr></tfoot></table></div>
+<div data-evaluation="distant_test" data-sample="83" hidden><table class="strip"><caption>Seed 83 · distant set · 800 variants</caption><thead><tr><th scope="col">Rule</th><th scope="col" class="axis">RMSE scale</th><th scope="col" class="number">RMSE</th></tr></thead><tbody><tr><th scope="row">Random</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:65.60149%;--point:65.60149%"><i class="mark random"></i></div></td><td class="number">1.0936</td></tr><tr><th scope="row">Uncertainty only</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:65.60149%;--point:77.33616%"><i class="mark uncertainty_only"></i></div></td><td class="number">1.1640</td></tr><tr><th scope="row">Diversity only</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:65.60149%;--point:72.77524%"><i class="mark diversity_only"></i></div></td><td class="number">1.1367</td></tr><tr><th scope="row">Combined</th><td class="plotcell"><div aria-hidden="true" class="track" style="--reference:65.60149%;--point:82.02355%"><i class="mark combined"></i></div></td><td class="number">1.1921</td></tr></tbody><tfoot><tr aria-hidden="true"><td></td><td class="ticks"><span>0.7</span><span>1.0</span><span>1.3</span></td><td></td></tr></tfoot></table></div></div>
+</section>
+<section aria-labelledby="contrast"><h2 id="contrast">Did the benefit grow at distance?</h2>
+<p>For each seed, subtract the combined rule’s error from random selection’s error. Then compare that benefit on distant and local variants. A positive difference favors the original expectation.</p>
+<table><caption>Change in benefit, distant minus local</caption><thead><tr><th scope="col">Seed</th><th scope="col" class="axis">Difference</th><th scope="col" class="number">RMSE units</th></tr></thead>
+<tbody><tr data-seed="11"><th scope="row">11</th><td class="plotcell"><div class="contrast-track" aria-hidden="true"><i class="delta positive" style="left:50.00000%;width:2.50534%"></i></div></td><td class="number">+0.0050</td></tr>
+<tr data-seed="29"><th scope="row">29</th><td class="plotcell"><div class="contrast-track" aria-hidden="true"><i class="delta negative" style="left:10.69929%;width:39.30071%"></i></div></td><td class="number">−0.0786</td></tr>
+<tr data-seed="47"><th scope="row">47</th><td class="plotcell"><div class="contrast-track" aria-hidden="true"><i class="delta positive" style="left:50.00000%;width:26.78009%"></i></div></td><td class="number">+0.0536</td></tr>
+<tr data-seed="83"><th scope="row">83</th><td class="plotcell"><div class="contrast-track" aria-hidden="true"><i class="delta negative" style="left:1.34582%;width:48.65418%"></i></div></td><td class="number">−0.0973</td></tr>
+<tr data-seed="Mean"><th scope="row">Mean</th><td class="plotcell"><div class="contrast-track" aria-hidden="true"><i class="delta negative" style="left:35.33263%;width:14.66737%"></i></div></td><td class="number">−0.0293</td></tr></tbody><tfoot><tr aria-hidden="true"><td></td><td class="ticks"><span>−0.10</span><span>0</span><span>+0.10</span></td><td></td></tr></tfoot></table>
+<details><summary>Inspect both benefits for each seed</summary>
+<table><caption>Random RMSE minus combined RMSE</caption><thead><tr><th scope="col">Seed</th><th scope="col">Local</th><th scope="col">Distant</th><th scope="col">Difference</th></tr></thead><tbody><tr><th scope="row">11</th><td>+0.0317</td><td>+0.0367</td><td>+0.0050</td></tr>
+<tr><th scope="row">29</th><td>+0.0067</td><td>−0.0719</td><td>−0.0786</td></tr>
+<tr><th scope="row">47</th><td>+0.0212</td><td>+0.0748</td><td>+0.0536</td></tr>
+<tr><th scope="row">83</th><td>−0.0012</td><td>−0.0985</td><td>−0.0973</td></tr>
+<tr><th scope="row">Mean</th><td>+0.0146</td><td>−0.0148</td><td>−0.0293</td></tr></tbody></table></details></section></div>
+</main><footer><div><p>Each seed starts from a different sample of 64 records. All four runs reuse the same evaluation observations. The differences describe these runs on historical data.</p>
+<p><a href="https://github.com/TheThunda01/gfp-active-learning/blob/main/experiments/shortlist_review/results/seed_comparison.csv">First-batch diagnostic data</a> · <a href="https://github.com/TheThunda01/gfp-active-learning/blob/4b27c32047288e32a647e2e8b411f3b272d6113c/experiments/uncertainty_ablation/results/learning_curves.csv">Archived errors by rule and seed</a> · <a href="https://github.com/TheThunda01/gfp-active-learning/blob/4b27c32047288e32a647e2e8b411f3b272d6113c/experiments/uncertainty_ablation/results/distance_benefit_contrast.csv">Paired contrasts</a> · <a href="https://github.com/TheThunda01/gfp-active-learning/blob/main/experiments/shortlist_review/README.md">Read the shortlist case study</a></p></div></footer>
+<script>
+const evaluation = document.getElementById('evaluation');
+const sample = document.getElementById('sample');
+function showSelection() {
+  document.getElementById('audit-place').textContent = evaluation.value === 'distant_test' ? 'Distant set' : 'Local set';
+  for (const cell of document.querySelectorAll('[data-audit-set]')) {
+    cell.hidden = cell.dataset.auditSet !== evaluation.value;
+  }
+  for (const row of document.querySelectorAll('[data-audit-seed]')) {
+    row.hidden = sample.value !== 'mean' && row.dataset.auditSeed !== sample.value;
+  }
+  for (const panel of document.querySelectorAll('[data-evaluation]')) {
+    panel.hidden = panel.dataset.evaluation !== evaluation.value || panel.dataset.sample !== sample.value;
+  }
+  for (const row of document.querySelectorAll('[data-seed]')) {
+    const selected = row.dataset.seed.toLowerCase() === sample.value;
+    if (selected) row.setAttribute('aria-current','true');
+    else row.removeAttribute('aria-current');
+  }
+}
+document.getElementById('controls').hidden = false;
+evaluation.addEventListener('change',showSelection);
+sample.addEventListener('change',showSelection);
+showSelection();
+</script></body></html>

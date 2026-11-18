@@ -1,0 +1,5 @@
+seed,initial_labels,available_records,shortlist_size,diversity_batch_size,diversity_retained,diversity_excluded,combined_diversity_overlap,uncertainty_order_match,combined_order_match,local_rmse_gap_128,distant_rmse_gap_128,local_rmse_gap_384,distant_rmse_gap_384
+11,64,2336,256,64,15,49,8,True,True,-0.01873878,0.09716090,-0.01422218,-0.01714733
+29,64,2336,256,64,8,56,3,True,True,-0.02627819,0.08027427,-0.01671644,0.06915784
+47,64,2336,256,64,4,60,4,True,True,-0.02384384,-0.00325052,-0.03644010,0.04076193
+83,64,2336,256,64,12,52,5,True,True,0.02561556,0.30751116,0.01578055,0.05548987

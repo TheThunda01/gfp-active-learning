@@ -43,7 +43,7 @@ Here, $`r`$ is the evaluation role (local or distant), $`s`$ identifies the acqu
 
 Tree disagreement (the spread of individual tree predictions) had substantially weaker Spearman rank association with absolute error distantly than locally. For the combined policy, the mean association was **0.5496 locally** and **0.0688 distantly**. Each association was computed within one policy, seed, budget and evaluation role before averaging. This is not calibration or a probability of being wrong.
 
-One plausible follow-up is to inspect whether the uncertainty shortlist excludes candidates that the full-pool diversity rule finds useful. The present result does not prove that mechanism. The model also discards residue position and cannot extrapolate the mutation-count feature beyond the pool range. The scope stays one historical GFP subset, with related sequences and already observed labels.
+The [first-shortlist case study](../shortlist_review/README.md) follows the four runs from their shared starting state. It shows which diversity-only choices remained eligible, which choices both rules actually made, and how prediction error changed after the first batch. The evaluation uses this historical GFP subset and related sequences.
 
 The two panels share an error scale. Each policy has a distinct line and marker, and the bands span one standard deviation across the four seeds.
 

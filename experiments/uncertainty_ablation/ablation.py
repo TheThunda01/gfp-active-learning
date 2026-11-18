@@ -126,23 +126,92 @@ def historical_checks(records,history,original_dir):
             if actual != expected: raise ValueError('Historical acquisition order mismatch')
 
 
-def figure(summary,target):
+def figure(summary, target):
     import matplotlib
     matplotlib.use('Agg')
     import matplotlib.pyplot as plt
-    colors={'random':'#777777','uncertainty_only':'#bf6726','diversity_only':'#79599a','combined':'#167d90'}
-    fig,axes=plt.subplots(1,2,figsize=(11,4.5),layout='constrained',sharex=True)
-    for ax,role in zip(axes,EVALUATIONS):
-        for policy in POLICIES:
-            rows=[r for r in summary if r['evaluation']==role and r['policy']==policy]
-            x=np.array([r['label_budget'] for r in rows]);y=np.array([r['rmse_mean'] for r in rows]);sd=np.array([r['rmse_sd_descriptive'] for r in rows])
-            ax.plot(x,y,'o-',color=colors[policy],label=policy.replace('_',' '))
-            ax.fill_between(x,y-sd,y+sd,color=colors[policy],alpha=.10)
-        ax.set(title=role.replace('_',' '),xlabel='Revealed pool labels',ylabel='RMSE (source log-brightness scale)')
-        ax.spines[['top','right']].set_visible(False);ax.grid(alpha=.2)
+
+    styles = {
+        'random': ('#555555', 'o', '--'),
+        'uncertainty_only': ('#ac5724', 's', '-.'),
+        'diversity_only': ('#675393', '^', ':'),
+        'combined': ('#12695d', 'D', '-'),
+    }
+    fig, axes = plt.subplots(1, 2, figsize=(11, 4.8), layout='constrained',
+                             sharex=True, sharey=True)
+    for ax, role in zip(axes, EVALUATIONS):
+        for policy, (color, marker, line) in styles.items():
+            rows = [r for r in summary if r['evaluation'] == role and r['policy'] == policy]
+            x = [r['label_budget'] for r in rows]
+            means = np.array([r['rmse_mean'] for r in rows])
+            sd = np.array([r['rmse_sd_descriptive'] for r in rows])
+            ax.plot(x, means, color=color, marker=marker, linestyle=line,
+                    label=policy.replace('_', ' '))
+            ax.fill_between(x, means - sd, means + sd, color=color, alpha=.10)
+        ax.set(title={'local_test': 'Nearby sequences', 'distant_test': 'More mutated sequences'}[role],
+               xlabel='Revealed pool labels', xticks=BUDGETS)
+        ax.spines[['top', 'right']].set_visible(False)
+        ax.grid(axis='y', alpha=.2)
+    axes[0].set_ylabel('RMSE (log-brightness units)')
     axes[0].legend(fontsize=8)
-    fig.suptitle('Four acquisition policies · same initial labels, budgets and forest\nExploratory reused data; shading is descriptive SD across four seeds',fontsize=12)
-    fig.savefig(target,dpi=160);plt.close(fig)
+    fig.suptitle('Prediction error as more labels are revealed\n'
+                 'Lower is better. Shading shows one standard deviation across seeds.', fontsize=12)
+    fig.savefig(target, dpi=160)
+    plt.close(fig)
+
+
+def contrast_description(contrasts):
+    values = [row['distant_minus_local_benefit'] for row in contrasts]
+    positive = sum(value > 0 for value in values)
+    negative = sum(value < 0 for value in values)
+    tied = len(values) - positive - negative
+    mean = sum(values) / len(values)
+    direction = ('larger on the distant set' if mean > 0 else
+                 'larger on the local set' if mean < 0 else 'equal on the two sets')
+    return (f'The mean benefit of combined selection was {direction}. '
+            f'The distant-minus-local contrast averaged **{mean:+.4f}** RMSE units. '
+            f'Across {len(values)} seeds the counts were {positive} positive, '
+            f'{negative} negative, and {tied} tied.')
+
+
+def write_report(output, summary, contrasts):
+    final = [row for row in summary if row['label_budget'] == BUDGETS[-1]]
+    report = [
+        '# Does combined selection help more at distance?', '',
+        'The original prediction was that combined selection would help most on more mutated sequences. '
+        f'At {BUDGETS[-1]} revealed labels, each policy was evaluated on the same '
+        'historical measurements. Lower root mean squared error (RMSE) means '
+        'the predictions were closer to the recorded log-brightness values.', '',
+        '| Evaluation | Policy | Mean RMSE | SD across seeds |',
+        '| --- | --- | ---: | ---: |',
+    ]
+    for row in final:
+        report.append(f"| {row['evaluation']} | {row['policy']} | {row['rmse_mean']:.4f} | {row['rmse_sd_descriptive']:.4f} |")
+    distant = [row for row in final if row['evaluation'] == 'distant_test']
+    minimum = min(row['rmse_mean'] for row in distant)
+    best = ', '.join(row['policy'].replace('_', ' ') for row in distant if row['rmse_mean'] == minimum)
+    report.extend(['', f'**Lowest distant-set mean RMSE ({minimum:.4f})** · {best}.', '',
+                   '## Where did combined selection help?', '',
+                   'For each seed, subtract the combined policy’s error from random sampling’s error. '
+                   'A positive benefit means the combined policy predicted more accurately.', '',
+                   contrast_description(contrasts), '',
+                   '| Seed | Local benefit | Distant benefit | Distant minus local |',
+                   '| ---: | ---: | ---: | ---: |'])
+    for row in contrasts:
+        report.append(f"| {row['seed']} | {row['local_benefit']:+.4f} | {row['distant_benefit']:+.4f} | {row['distant_minus_local_benefit']:+.4f} |")
+    report.extend(['', 'Each seed reuses the same evaluation measurements. The differences describe this historical benchmark.', '',
+                   '## Does tree disagreement track error?', '',
+                   'Each cell averages the final-budget Spearman correlation across seeds. '
+                   'Positive values mean that cases with greater disagreement between trees tended to have larger errors.', '',
+                   '| Policy | Nearby sequences | More mutated sequences |',
+                   '| --- | ---: | ---: |'])
+    for policy in POLICIES:
+        values = {r['evaluation']: r['spread_error_spearman_mean'] for r in final if r['policy'] == policy}
+        report.append(f"| {policy} | {values['local_test']:.4f} | {values['distant_test']:.4f} |")
+    report.extend(['', 'The correlations describe how errors rank within each set. They do not measure calibrated interval coverage.', '', '![Mean prediction error at each budget for nearby and more mutated sequences](learning_curves.png)', '',
+                   'The models use composition and mutation count. The distant set extends beyond the pool’s mutation-count range. '
+                   'The four policies share their initial labels and budgets within each seed.'])
+    (output / 'report.md').write_text('\n'.join(report) + '\n', encoding='utf-8')
 
 
 def run(output=HERE/'results'):
@@ -203,32 +272,7 @@ def run(output=HERE/'results'):
               'policies':list(POLICIES),'budgets':list(BUDGETS),'seeds':list(SEEDS),'forest':make_model(0).get_params(),
               'model_seed_rule':'seed + budget','historical_random_combined_checks_passed':True,
               'code_sha256':sha256(__file__),'versions':{p:importlib.metadata.version(p) for p in ('numpy','scipy','scikit-learn','matplotlib')}}
-    (output/'run_metadata.json').write_text(json.dumps(metadata,indent=2,allow_nan=False)+'\n')
-    report=['# GFP policy ablation: learning checkpoint','',
-            'Prediction recorded before this ablation: **combined selection would help most on more-distant variants**. No reason was supplied. These are reused historical outcomes, not a new blind holdout.','',
-            '| Evaluation | Policy | Final mean RMSE | Descriptive SD |','| --- | --- | ---: | ---: |']
-    for r in summary:
-        if r['label_budget']==BUDGETS[-1]:report.append(f"| {r['evaluation']} | {r['policy']} | {r['rmse_mean']:.4f} | {r['rmse_sd_descriptive']:.4f} |")
-    contrast=float(np.mean([r['distant_minus_local_benefit'] for r in contrasts]))
-    distant=[r for r in summary if r['label_budget']==BUDGETS[-1] and r['evaluation']=='distant_test']
-    best=min(distant,key=lambda r:r['rmse_mean'])['policy']
-    report+=['',f'The lowest distant-set mean RMSE was **{best}**. The mean distant-minus-local combined benefit was **{contrast:+.4f}** RMSE units; positive would favor the predicted distance pattern.',
-             '', 'This fixed exploratory extension does not support the recorded combined-at-distance prediction. The result is specific to these outcomes, seeds and model; it is not a general ranking of acquisition algorithms.',
-             '', '| Seed | Combined benefit locally | Combined benefit distantly | Distant minus local benefit |',
-             '| ---: | ---: | ---: | ---: |']
-    report += [f"| {r['seed']} | {r['local_benefit']:+.4f} | {r['distant_benefit']:+.4f} | {r['distant_minus_local_benefit']:+.4f} |" for r in contrasts]
-    report += ['', 'Benefit means random RMSE minus combined RMSE; positive is better for combined. The contrast is positive in two seeds and negative in two. Four seeds share the same evaluation observations; these are descriptive comparisons, not a significance test.',
-               '', '## Does tree disagreement track error?', '',
-               '| Policy | Local mean rank association | Distant mean rank association |',
-               '| --- | ---: | ---: |']
-    for policy in POLICIES:
-        values={r['evaluation']:r['spread_error_spearman_mean'] for r in summary if r['policy']==policy and r['label_budget']==BUDGETS[-1]}
-        report.append(f"| {policy} | {values['local_test']:.4f} | {values['distant_test']:.4f} |")
-    report += ['', 'Each value averages four separately computed Spearman associations between tree spread and absolute prediction error at the final budget. The observations are reused across seeds. These are heuristic association diagnostics, not calibration, error bars, or confidence-interval coverage.',
-               '', 'Spread/error association is much weaker on this distant set. This is consistent with disagreement being a less useful warning of error there, but does not prove why the combined acquisition policy lost. Uncertainty screening can exclude candidates that diversity-only would consider; its causal contribution would need a further fixed comparison.',
-               '', '![Learning curves](learning_curves.png)', '',
-               'The existing random and combined acquisition orders and metrics were reproduced. Uncertainty-only removes the diversity step; diversity-only removes uncertainty screening. All models still discard residue position, and the distant set extends beyond the pool’s mutation-count range. Neither this ablation nor its reused evaluation labels establish prospective or protein-family generalization.']
-    (output/'report.md').write_text('\n'.join(report)+'\n')
+    write_report(output, summary, contrasts)
     metadata['outputs_sha256']={p.name:sha256(p) for p in output.iterdir() if p.is_file() and p.name!='run_metadata.json'}
     (output/'run_metadata.json').write_text(json.dumps(metadata,indent=2,allow_nan=False)+'\n')
     if any(sha256(ROOT/p)!=value for p,value in protected.items()):raise ValueError('Original benchmark files changed during run')

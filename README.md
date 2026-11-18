@@ -1,28 +1,30 @@
 # GFP active learning
 
-GFP means green fluorescent protein, a protein used as a light-emitting biological reporter.
+When the model could reveal only 64 more green fluorescent protein (GFP) brightness measurements, did it help to narrow its choices first? In four historical runs, the screen kept **4 to 15 of the 64 records** that a diversity-only rule chose. In the run that kept just four, the combined rule still predicted the more mutated examples slightly better after the first batch.
 
-**Can a model choose which existing brightness measurements to reveal next and learn more efficiently than random sampling?** This small, reproducible benchmark tests that question on two evaluation sets. In the included run, the selection heuristic slightly reduced average error on nearby sequences but increased it on more mutated sequences.
+[Read the shortlist case study](experiments/shortlist_review/README.md) · [Explore the four rules](https://thethunda01.github.io/gfp-active-learning/) · [Inspect the four-row results table](experiments/shortlist_review/results/seed_comparison.csv)
+
+![How many of the 64 diversity-only choices survived the first uncertainty screen? Starting seeds 11, 29, 47 and 83 retained 15, 8, 4 and 12 choices, respectively.](experiments/shortlist_review/figures/shortlist-retention.png)
+
+**First-round eligibility.** Each run began with 64 labeled records. Of the 2,336 remaining, the combined rule could choose only from a shortlist of 256. The bars show how many diversity-only choices made that shortlist. The [case study](experiments/shortlist_review/README.md#what-happened-to-prediction-error) follows those same runs into their first prediction check.
 
 ## Why this project
 
-This is the current investigation in [From biological measurements to better experiments](https://github.com/TheThunda01/TheThunda01/blob/main/PROJECT_GUIDE.md): testing whether a more elaborate selection rule improves prediction, then examining where it fails.
-
-The data come from the measured green fluorescent protein landscape of [Sarkisyan et al. (2016)](https://doi.org/10.1038/nature17995). Every sequence and label already existed before this project. The program hides and reveals stored measurements; it does not design proteins, run experiments, or recommend sequences for testing.
+A model can use its uncertainty to decide which measurement to inspect next. This project tests that idea with fluorescence measurements published by Sarkisyan and colleagues. Each selection rule reveals values that researchers had already measured. The fixed pool makes the decisions inspectable and the comparisons repeatable. [Original study](https://doi.org/10.1038/nature17995) · [Data provenance](docs/data-provenance.md)
 
 ## What it does
 
-- Traces data preparation through checksums and separate code/data licenses.
-- Separates the acquisition pool from evaluation sets and reveals labels only when a policy selects them.
-- Fits random-forest regressors to simple sequence descriptors and compares random sampling with a diversity-aware acquisition heuristic.
-- Reports learning curves and paired comparisons across seeds, with tests against hidden-label leakage.
-- Reports both favorable and unfavorable results across evaluation sets.
+| Investigation | Question | Evidence |
+| --- | --- | --- |
+| Original benchmark | Does combined selection improve on random sampling? | [Two-rule learning curves and paired seeds](results/report.md) |
+| Four-rule comparison | What happens when the uncertainty and diversity steps are used separately? | [Four policies at the same budgets](experiments/uncertainty_ablation/README.md) |
+| First-shortlist review | Which diversity-only choices did the screen leave available? | [Diagram, reconstructed counts and archived error differences](experiments/shortlist_review/README.md) |
 
-The pool has 2,400 observations. Two fixed evaluation sets contain 400 nearby and 800 more mutated sequences. Their labels never enter training or acquisition. Each policy starts from the same 64 observations within a seed and reaches 384 revealed labels. Four seeds compare uniform random selection with tree-disagreement screening followed by sequence-diversity selection.
-
-An independent saved-run audit checks query identities, source labels, budgets, paired initial sets, aggregate statistics and sequence-distance summaries without training another model.
+All three use the same historical records. Within each seed, the rules begin with the same 64 labels from a pool of 2,400 and finish with 384. Two separate evaluation sets contain 400 nearby sequences and 800 more mutated sequences. The rules never see their brightness measurements during selection or training.
 
 ## Quick start
+
+To inspect the results in your browser, [open the four-rule explorer](https://thethunda01.github.io/gfp-active-learning/). It also runs offline if you download [its self-contained HTML file](https://raw.githubusercontent.com/TheThunda01/gfp-active-learning/main/docs/index.html). To rerun the first-screen comparison, use the [case-study commands and platform notes](experiments/shortlist_review/README.md#reproduce-the-comparison).
 
 CI uses Python 3.12. The included 1.3 MB CSV lets the analysis run offline after dependency installation. It requires no account, application programming interface (API) key, graphics processing unit (GPU), or model download.
 
@@ -64,30 +66,20 @@ These commands use the reproduced run and write its prediction bundle under `rep
 
 ## Example results
 
-At 384 revealed labels, lower root mean squared error (RMSE) is better:
+At 384 labels, uncertainty-only had the lowest mean prediction error on nearby sequences. Diversity-only had the lowest mean error on the more mutated sequences. The combined rule outperformed random sampling on average on the nearby set and trailed it on the more mutated set.
 
-| Evaluation set | Random RMSE, mean ± SD | Uncertainty + diversity RMSE, mean ± SD |
+| Selection rule | Nearby RMSE | More mutated RMSE |
 | --- | ---: | ---: |
-| Local, ≤3 source substitutions | 0.7715 ± 0.0096 | 0.7570 ± 0.0162 |
-| More mutated, ≥4 source substitutions | 1.1651 ± 0.0632 | 1.1799 ± 0.0406 |
+| Random | 0.7715 | 1.1651 |
+| Uncertainty-only | **0.7535** | 1.1897 |
+| Diversity-only | 0.7699 | **1.1428** |
+| Combined | 0.7570 | 1.1799 |
 
-Errors use the source's log-brightness scale. Standard deviation (SD) describes variation across four seeds on the same data; it is not a confidence interval or biological replication. The heuristic's small average local advantage did not carry over to the more mutated set. This result describes one frozen subset and one simple model; it does not show that either policy is generally better.
-
-![Learning curves](results/learning_curves.png)
-
-The dashed reference uses every pool label with the same model family. It is contextual, not a guaranteed upper bound. The evaluation sequences remain related to the pool: the median nearest-pool distance is two residues locally and four in the more mutated set. These are not tests on unseen protein families.
-
-The [example audit](examples/run-audit.json) verifies 3,072 acquisitions, 80 metric rows, 20 aggregate rows and eight paired differences. It checks that the saved records meet the fixed contract; it does not establish biological validity or prove that humans were blinded.
-
-The [final-prediction check](examples/final-predictions/verification.json) joins 9,600 exported predictions to source labels and independently reproduces all 16 final-budget metric rows. Only the final budget is exported; earlier trajectories are unchanged.
-
-A separate [four-policy ablation](experiments/uncertainty_ablation/README.md) isolates uncertainty-only, diversity-only, and combined selection against random with the same starts, budgets and model. Diversity-only had the lowest distant-set mean RMSE; uncertainty-only had the lowest local-set mean. The recorded prediction that combined would help most at distance was not supported in this exploratory reuse of the historical subset. The original results above remain unchanged.
+RMSE measures prediction error on the source log-brightness scale. Lower values mean closer predictions. The table averages four starting seeds on the same evaluation records. Nearby sequences have up to three source substitutions. The more mutated set has four or more. [Explore each seed](https://thethunda01.github.io/gfp-active-learning/) · [Underlying observations](experiments/uncertainty_ablation/results/learning_curves.csv)
 
 ### Inspect the paired seeds
 
-![Individual acquisition trajectories and final paired differences](docs/figures/seed-explorer/seed-explorer.png)
-
-The [seed explorer](docs/seed-explorer.md) makes the original two-policy run's variability inspectable: hover for each seed's exact values, hide trajectories with the legend, and compare final active-minus-random differences. Its standalone HTML and PNG come directly from the saved CSVs; complete pairings and evaluation denominators are checked before rendering. Four seeds on the same observed sequences remain descriptive variation, not independent biological replication.
+The full [four-rule report](experiments/uncertainty_ablation/results/report.md) includes the paired contrasts, variability and learning curves. The original [two-rule seed explorer](docs/seed-explorer.md) lets you follow individual runs across budgets. The [saved-run audit](examples/run-audit.json) checks the acquisition records, and the [final-prediction check](examples/final-predictions/verification.json) reconciles exported predictions to 16 final-budget metric rows.
 
 ## Practical use and limitations
 

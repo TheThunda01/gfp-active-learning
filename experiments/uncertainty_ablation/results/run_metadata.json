@@ -59,14 +59,15 @@
     "matplotlib": "3.10.8"
   },
   "outputs_sha256": {
-    "learning_curves.png": "2f797a5c1effe4779590ff4110c58781437053f87bf00b56a44cc12a020a1148",
+    "learning_curves.png": "b7bc2a61653edc3a5fc8cacdfaf9e120b32cf1e98e7f29caf8187f3586bdc2d5",
     "final_predictions.csv.gz": "f77ece691c9bf5f24ac9b7f934ae560f39a4dcb7bb73e54934e8070d6be53fbc",
     "paired_final.csv": "dbbc5de83ab6c6f0c7e58fa054e374a1291f71f9b72d87ba222a59c41c375424",
-    "report.md": "687ba3213393b1e3df2720ccb1d57ebab7f7af5d8b44fc0a9ec45fda8f9d4457",
+    "report.md": "1d1e95639bd9f634376d625948226bd22e8ba56c4aa28f3f0cf8c704adb07512",
     "distance_benefit_contrast.csv": "9f551e70b41aa80249f56c4529c27bc9d6189dc463cd30a22dbe266377b5a71d",
     "learning_curves.csv": "fe54316f5a55c3b2e6cb3439275515138d7fd3400e0610e700ad817cebd893ea",
     "acquisition_overlap.csv": "355ffe332d964678e03f396eeccfbd77c10377868f1a3ee31f1f835bcc560420",
     "learning_summary.csv": "e5e1f21d6d64c08ba84214fe7a0ed450c8e67a3776bb62f16f908c6600ad9ae2",
     "query_history.csv": "47f938a3ec44c9e98febe118f3a68310a80e3245cdfd4b7e11fbe20e73360a44"
-  }
+  },
+  "render_code_sha256": "c7a592e604405b27ff906ca90be888f77fd1859f830c804a4848ddb4b5254fcc"
 }
